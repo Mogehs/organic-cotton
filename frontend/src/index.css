@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@font-face {
+  font-family: "MyFont";
+  src: url("/fonts/XBOX_Helvetica.ttf") format("truetype"),
+    url("/fonts/XBOX_Helvetica.woff2") format("woff2");
+  font-style: normal;
+}
+
+@theme {
+  --font-custom: "MyFont";
+}
