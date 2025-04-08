@@ -18,7 +18,7 @@ export default function Studio() {
           <span className="text-base font-medium text-[#4e556d]">Git up</span>
         </div>
 
-        <p className="text-sm text-[#4e556d] text-center mt-6">Email / Password</p>
+        <p className="text-lg text-[#4e556d] text-center mt-6">Email / Password</p>
       </div>
     </div>
       <h1>SANITY</h1>
