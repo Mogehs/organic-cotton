@@ -8,7 +8,7 @@ const products = [
         price: "$240",
         originalPrice: "$300",
         rating: 4.8,
-        image: "/home/hero.webp",
+        image: "/newarrivels/12.webp",
         off: ""
     },
     {
@@ -17,7 +17,7 @@ const products = [
         price: "$144.5",
         originalPrice: "$170",
         rating: 4.6,
-        image: "/home/hero.webp",
+        image: "/newarrivels/9.jpg",
         off: "40%"
     },
     {
@@ -26,7 +26,7 @@ const products = [
         price: "$78",
         originalPrice: "$130",
         rating: 4.3,
-        image: "/home/hero.webp",
+        image: "/newarrivels/10.jpg",
         off: "60%"
     },
     {
@@ -35,7 +35,7 @@ const products = [
         price: "$114.5",
         originalPrice: "$229",
         rating: 4.5,
-        image: "/home/hero.webp",
+        image: "/newarrivels/11.png",
         off: "80%"
     }
 ];
@@ -59,23 +59,23 @@ export default function TopSelling() {
                         return (
                             <div
                                 key={product.id}
-                                className={`bg-white hover:shadow-md rounded-xl overflow-hidden transition-transform duration-300 ${skewClass}`}
+                                className={` hover:shadow-md cursor-pointer rounded-xl overflow-hidden transition-transform duration-300 ${skewClass}`}
                             >
                                 <img
                                     src={product.image}
                                     alt={product.name}
-                                    className="w-full h-64 object-cover"
+                                    className="w-full h-64"
                                 />
                                 <div className="p-4">
-                                    <h3 className="text-2xl font-bold text-[#09090b] mb-1">{product.name}</h3>
+                                    <h3 className="md:text-2xl font-bold text-[#09090b] mb-1">{product.name}</h3>
                                     <div className="text-yellow-500 text-sm flex justify-start items-center gap-1">
                                         <FaStar /> <FaStar /> <FaStar /> {product.rating}
                                     </div>
                                     <div className="flex items-center space-x-2 mb-2">
-                                        <span className="text-2xl font-bold text-[#09090b]">{product.price}</span>
-                                        <span className="line-through text-xl font-bold text-gray-500">{product.originalPrice}</span>
+                                        <span className="md:text-2xl font-bold text-[#09090b]">{product.price}</span>
+                                        <span className="line-through md:text-xl font-bold text-gray-500">{product.originalPrice}</span>
                                         {product.off && (
-                                            <span className="text-lg bg-[#ffeaea] px-2 py-1 rounded-full text-[#ff5b5b]">
+                                            <span className="md:text-lg bg-[#ffeaea] px-2 py-1 rounded-full text-[#ff5b5b]">
                                                 {product.off}
                                             </span>
                                         )}
@@ -86,7 +86,7 @@ export default function TopSelling() {
                     })}
                 </div>
                 <div className="flex justify-center mt-8">
-                    <button className="px-10 py-4 bg-gray-200 text-gray-800 rounded-full hover:bg-[#09090b] hover:text-white transition">
+                    <button className="cursor-pointer px-10 py-4 bg-gray-200 text-gray-800 rounded-full hover:bg-[#09090b] hover:text-white transition">
                         View all
                     </button>
                 </div>

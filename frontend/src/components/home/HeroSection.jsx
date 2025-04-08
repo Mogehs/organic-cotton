@@ -14,7 +14,7 @@ export default function HeroSection() {
             Browse through our diverse range of meticulously crafted garments,
             designed to bring out your individuality and cater to your sense of style.
           </p>
-          <button className="bg-black text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition duration-300">
+          <button className="bg-black cursor-pointer text-white px-12 py-3 rounded-full font-medium hover:bg-gray-800 transition duration-300">
             Shop Now
           </button>
 
@@ -40,9 +40,9 @@ export default function HeroSection() {
             alt="Fashion Models"
             className="w-full h-auto object-cover rounded-xl"
           />
-         <div className="absolute top-0 text-4xl right-0 w-6 h-6 transform translate-x-2 -translate-y-2 spin-slow rounded-sm">
-  <FaStar />
-</div>
+          <div className="absolute top-0 text-4xl right-0 w-6 h-6 transform translate-x-2 -translate-y-2 spin-slow rounded-sm">
+            <FaStar />
+          </div>
 
 
         </div>
