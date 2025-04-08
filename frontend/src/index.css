@@ -8,6 +8,9 @@
 
 @theme {
   --font-custom: "MyFont";
+  --color-dark-color: #4c3c2a;
+  --color-medium-color: #836d54;
+  --color-light-color: #d2bea2;
 }
 @keyframes spinSlow {
   0% { transform: rotate(0deg); }
