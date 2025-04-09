@@ -20,6 +20,7 @@ const MainLayout = () => (
     <Footer />
   </div>
 );
+
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   },
   { path: "*", element: <div>404 Not Found</div> },
 ]);
+
 function App() {
   return <RouterProvider router={router} />;
 }
