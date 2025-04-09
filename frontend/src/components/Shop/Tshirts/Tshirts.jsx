@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "Sleeve Stripe T-Shirt",
+    name: "Dictum dis vel platea",
     price: "$78",
     originalPrice: "$130",
     rating: 4.8,
@@ -14,16 +14,16 @@ const products = [
   },
   {
     id: 2,
-    name: "Classic Polo Shirt ",
+    name: "COURAGE GRAPHIC T-Paint",
     price: "$180",
     originalPrice: "",
     rating: 4.6,
-    image: "/newarrivels/6.png",
+    image: "/newarrivels/17.webp",
     off: "",
   },
   {
     id: 3,
-    name: "Gradient Graphic T-shirt",
+    name: "Gradient T-shirt",
     price: "$145.5",
     originalPrice: "",
     rating: 4.3,
@@ -32,16 +32,16 @@ const products = [
   },
   {
     id: 4,
-    name: "COURAGE GRAPHIC T-SHIRT",
+    name: "Est luctus facilisi himen ",
     price: "$145",
     originalPrice: "",
     rating: 4.3,
-    image: "/newarrivels/17.webp",
+    image: "/newarrivels/6.png",
     off: "",
   },
   {
     id: 5,
-    name: "Black Striped T-Shirt",
+    name: "Black Striped Toys",
     price: "$120",
     originalPrice: "",
     rating: 4.3,
@@ -81,7 +81,7 @@ export default function Tshirts() {
           return (
             <div
               key={product.id}
-              className={`cursor-pointer rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`cursor-pointer shadow rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

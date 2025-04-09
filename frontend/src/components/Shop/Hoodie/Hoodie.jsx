@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "Casual Green Bomber Jacket",
+    name: "Et elit vivamus nisl",
     price: "$240",
     originalPrice: "$300",
     rating: 4.8,
@@ -14,7 +14,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Classic Black Pullover Hoodie",
+    name: "Est luctus facilisi himen",
     price: "$128",
     originalPrice: "",
     rating: 4.6,
@@ -23,11 +23,11 @@ const products = [
   },
   {
     id: 3,
-    name: "Classic White Pullover Hoodie",
+    name: "Similique sunt in culpa",
     price: "$135",
     originalPrice: "$150",
     rating: 4.3,
-    image: "/newarrivels/13.webp",
+    image: "/newarrivels/10.png",
     off: "10%",
   },
 
@@ -63,7 +63,7 @@ export default function Hoodie() {
           return (
             <div
               key={product.id}
-              className={`rounded-xl cursor-pointer overflow-hidden  hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`rounded-xl shadow cursor-pointer overflow-hidden  hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

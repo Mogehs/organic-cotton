@@ -5,11 +5,11 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "LOOSE FIT BERMUDA SHORTS",
+    name: "Est luctus facilisi himen",
     price: "$62.4",
     originalPrice: "$78",
     rating: 4.8,
-    image: "/newarrivels/16.webp",
+    image: "/newarrivels/7.png",
     off: "20%",
   },
 ];
@@ -41,7 +41,7 @@ export default function Short() {
           return (
             <div
               key={product.id}
-              className={`cursor-pointer rounded-xl overflow-hidden  hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`cursor-pointer shadow rounded-xl overflow-hidden  hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

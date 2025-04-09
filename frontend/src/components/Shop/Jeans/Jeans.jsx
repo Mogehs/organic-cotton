@@ -5,43 +5,43 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "Classic Black Straight-Leg Jeans",
+    name: "Classic Straight-Leg Jeans",
     price: "$142.8",
     originalPrice: "$170",
     rating: 4.8,
-    image: "/newarrivels/15.webp",
+    image: "/newarrivels/7.png",
     off: "16%",
   },
   {
     id: 2,
-    name: "Gray Slim-Fit Jogger Pants",
+    name: "Est luctus facilisi himen",
     price: "$144.5",
     originalPrice: "$170",
     rating: 4.6,
-    image: "/newarrivels/14.webp",
+    image: "/newarrivels/8.png",
     off: "15%",
   },
   {
     id: 3,
-    name: "Beige Slim-Fit Jogger Pants",
+    name: "Quilted Wind Jacket",
     price: "$242.1",
     originalPrice: "$269",
     rating: 4.3,
-    image: "/newarrivels/5.png",
+    image: "/newarrivels/2.png",
     off: "10%",
   },
   {
     id: 4,
-    name: "Black Athletic Jogger Pants with Side Stripes",
+    name: "Pink Pants with Side Stripes",
     price: "$180",
     originalPrice: "",
     rating: 4.3,
-    image: "/newarrivels/9.jpg",
+    image: "/newarrivels/6.png",
     off: "",
   },
   {
     id: 5,
-    name: "Skinny Fit Jeans",
+    name: "Piece Neon Striped Dress",
     price: "$240",
     originalPrice: "",
     rating: 4.3,
@@ -81,7 +81,7 @@ export default function Jeans() {
           return (
             <div
               key={product.id}
-              className={`rounded-xl cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`rounded-xl shadow cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

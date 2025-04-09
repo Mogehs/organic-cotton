@@ -2,7 +2,8 @@ import React from 'react';
 
 const StayUpto = () => {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-10 space-y-8 bg-[#09090b] rounded-lg">
+    <div className='bg-[#09090b]'>
+    <div className="max-w-6xl mx-auto px-4 py-10 space-y-8 rounded-lg mt-6">
       {/* Top Row */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
         <h2 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">
@@ -22,6 +23,7 @@ const StayUpto = () => {
           Subscribe to Newsletter
         </button>
       </div>
+    </div>
     </div>
   );
 };

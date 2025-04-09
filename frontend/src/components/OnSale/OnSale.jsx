@@ -5,7 +5,7 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "Casual Green Bomber Jacket",
+    name: "Et elit vivamus nisl",
     price: "$240",
     originalPrice: "$300",
     rating: 4.8,
@@ -14,16 +14,16 @@ const products = [
   },
   {
     id: 2,
-    name: "Casual Green Bomber Jacket",
+    name: "Integer tortor eros nas",
     price: "$142.3",
     originalPrice: "$170",
     rating: 4.6,
-    image: "/newarrivels/15.webp",
+    image: "/newarrivels/6.png",
     off: "16%",
   },
   {
     id: 3,
-    name: "Sleeve Stripe T-Shirt",
+    name: "Dictum dis vel platea",
     price: "$78",
     originalPrice: "$130",
     rating: 4.3,
@@ -32,7 +32,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Vertical Striped Shirt",
+    name: "Wisi enim ad minim",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.3,
@@ -41,7 +41,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Beige Slim-Fit Jogger Pants",
+    name: "Similique sunt in culpa",
     price: "$242.3",
     originalPrice: "$269",
     rating: 4.3,
@@ -50,7 +50,7 @@ const products = [
   },
   {
     id: 6,
-    name: "LOOSE FIT BERMUDA SHORTS",
+    name: "Piece Neon Striped Dress",
     price: "$62.4",
     originalPrice: "$78",
     rating: 4.3,
@@ -59,11 +59,11 @@ const products = [
   },
   {
     id: 7,
-    name: "Classic White Pullover Hoodie",
+    name: "Classic Pullover Toy",
     price: "$135",
     originalPrice: "$150",
     rating: 4.3,
-    image: "/newarrivels/13.webp",
+    image: "/newarrivels/9.png",
     off: "10%",
   },
 ];
@@ -97,7 +97,7 @@ export default function OnSale() {
           return (
             <div
               key={product.id}
-              className={`rounded-xl cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`rounded-xl shadow cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

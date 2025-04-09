@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa6";
 const products = [
   {
     id: 1,
-    name: "Casual Green Bomber Jacket",
+    name: "Et elit vivamus nisl",
     price: "$240",
     originalPrice: "$300",
     rating: 4.8,
@@ -13,7 +13,7 @@ const products = [
   },
   {
     id: 2,
-    name: "Gray Slim-Fit Jogger Pants",
+    name: "Quilted Wind Jacket",
     price: "$144.5",
     originalPrice: "$170",
     rating: 4.6,
@@ -22,7 +22,7 @@ const products = [
   },
   {
     id: 3,
-    name: "Sleeve Stripe T-Shirt",
+    name: "Dictum dis vel platea",
     price: "$78",
     originalPrice: "$130",
     rating: 4.3,
@@ -31,7 +31,7 @@ const products = [
   },
   {
     id: 4,
-    name: "Vertical Striped Shirt",
+    name: "Wisi enim ad minim",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
@@ -40,7 +40,7 @@ const products = [
   },
   {
     id: 5,
-    name: "Beige Slim-Fit Jogger Pants",
+    name: "Orbeez Ultimate",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
@@ -57,7 +57,7 @@ const products = [
   },
   {
     id: 7,
-    name: "Gradient Graphic T-shirt",
+    name: "Graphic T-shirt",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
@@ -65,7 +65,7 @@ const products = [
   },
   {
     id: 8,
-    name: "Checkered Shirt",
+    name: "Est luctus facilisi himen",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
@@ -73,23 +73,23 @@ const products = [
   },
   {
     id: 9,
-    name: "Black Athletic Jogger Pants with Side Stripes",
+    name: "Integer tortor eros nas",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
-    image: "/newarrivels/9.jpg",
+    image: "/newarrivels/9.png",
   },
   {
     id: 10,
-    name: "Classic Black Long Sleeve Button-Down Shirt",
+    name: "Similique sunt in culpa",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
-    image: "/newarrivels/10.jpg",
+    image: "/newarrivels/10.png",
   },
   {
     id: 11,
-    name: "Skinny Fit Jeans",
+    name: "Piece Neon Striped Dress",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.5,
@@ -127,7 +127,7 @@ export default function NewArrivels() {
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-64 object-cover"
+                className="w-full h-64"
               />
               <div className="p-4 space-y-2">
                 <h3 className="text-lg md:text-xl font-bold text-[#09090b]">

@@ -5,29 +5,29 @@ import { FaChevronRight } from "react-icons/fa";
 const products = [
   {
     id: 1,
-    name: "Vertical Striped Shirt",
+    name: "Integer tortor eros nas",
     price: "$114.5",
     originalPrice: "$229",
     rating: 4.8,
-    image: "/newarrivels/4.png",
+    image: "/newarrivels/6.png",
     off: "50%",
   },
   {
     id: 2,
-    name: "Checkered Shirt",
+    name: "Est luctus facilisi himen",
     price: "$178",
     originalPrice: "",
     rating: 4.6,
-    image: "/newarrivels/8.png",
+    image: "/newarrivels/7.png",
     off: "",
   },
   {
     id: 3,
-    name: "Classic Black Long Sleeve Button-Down Shirt",
+    name: "Neque nisl vestibulum",
     price: "$190",
     originalPrice: "",
     rating: 4.3,
-    image: "/newarrivels/10.jpg",
+    image: "/newarrivels/8.png",
     off: "",
   },
 ];
@@ -61,7 +61,7 @@ export default function Shirts() {
           return (
             <div
               key={product.id}
-              className={`rounded-xl cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
+              className={`rounded-xl shadow cursor-pointer overflow-hidden hover:shadow-lg transition-all duration-300 ease-in-out hover:scale-105 ${skewClass}`}
             >
               <img
                 src={product.image}

@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa6";
 const products = [
     {
         id: 1,
-        name: "Casual Green Bomber Jacket",
+        name: "Est luctus facilisi himen",
         price: "$240",
         originalPrice: "$300",
         rating: 4.8,
@@ -13,25 +13,25 @@ const products = [
     },
     {
         id: 2,
-        name: "Gray Slim-Fit Jogger Pants",
+        name: "Integer tortor eros nas",
         price: "$144.5",
         originalPrice: "$170",
         rating: 4.6,
-        image: "/newarrivels/9.jpg",
+        image: "/newarrivels/9.png",
         off: "40%"
     },
     {
         id: 3,
-        name: "Sleeve Stripe T-Shirt",
+        name: "Similique sunt in culpa",
         price: "$78",
         originalPrice: "$130",
         rating: 4.3,
-        image: "/newarrivels/10.jpg",
+        image: "/newarrivels/10.png",
         off: "60%"
     },
     {
         id: 4,
-        name: "Vertical Striped Shirt",
+        name: "Piece Neon Striped Dress",
         price: "$114.5",
         originalPrice: "$229",
         rating: 4.5,
@@ -43,7 +43,7 @@ const products = [
 export default function TopSelling() {
     return (
         <div className="border-t-2 border-gray-100 mt-12">
-            <section className="mt-20 max-w-7xl mx-auto px-6 md:px-12">
+            <section className="mt-10 max-w-7xl mx-auto px-6 md:px-12">
                 <h2 className="text-2xl md:text-4xl font-bold text-[#09090b] mb-10">TOP SELLING</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                     {products.map((product, index) => {
@@ -59,7 +59,7 @@ export default function TopSelling() {
                         return (
                             <div
                                 key={product.id}
-                                className={` hover:shadow-md cursor-pointer rounded-xl overflow-hidden transition-transform duration-300 ${skewClass}`}
+                                className={` hover:shadow-md shadow cursor-pointer rounded-xl overflow-hidden transition-transform duration-300 ${skewClass}`}
                             >
                                 <img
                                     src={product.image}

@@ -7,7 +7,7 @@ export default function HeroSection() {
     <section className="bg-[#f0f0f0] py-16 px-6 md:px-12">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#09090b]">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#09090b]">
             FIND CLOTHES THAT MATCHES YOUR STYLE
           </h1>
           <p className="text-gray-600 font-base">
@@ -20,15 +20,15 @@ export default function HeroSection() {
 
           <div className="flex space-x-6 pt-6 sm:ml-20">
             <div className="text-start">
-              <p className="text-2xl font-bold text-[#09090b]">200+</p>
+              <p className="text-xl md:text-2xl font-bold text-[#09090b]">200+</p>
               <p className="text-gray-600 text-sm">International Brands</p>
             </div>
             <div className="text-start">
-              <p className="text-2xl font-bold text-[#09090b]">2,000+</p>
+              <p className="text-xl md:text-2xl font-bold text-[#09090b]">2,000+</p>
               <p className="text-gray-600 text-sm">High-Quality Products</p>
             </div>
             <div className="text-start">
-              <p className="text-2xl font-bold text-[#09090b]">30,000+</p>
+              <p className="text-xl md:text-2xl font-bold text-[#09090b]">30,000+</p>
               <p className="text-gray-600 text-sm">Happy Customers</p>
             </div>
           </div>
@@ -36,7 +36,7 @@ export default function HeroSection() {
 
         <div className="relative">
           <img
-            src="/home/hero.webp"
+            src="/home/hero.png"
             alt="Fashion Models"
             className="w-full h-auto object-cover rounded-xl"
           />

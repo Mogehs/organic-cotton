@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa6";
 const products = [
     {
         id: 1,
-        name: "Casual Green Bomber Jacket",
+        name: "Et elit vivamus nisl",
         price: "$240",
         originalPrice: "$300",
         rating: 4.8,
@@ -13,7 +13,7 @@ const products = [
     },
     {
         id: 2,
-        name: "Gray Slim-Fit Jogger Pants",
+        name: "Quilted Wind Jacket",
         price: "$144.5",
         originalPrice: "$170",
         rating: 4.6,
@@ -22,7 +22,7 @@ const products = [
     },
     {
         id: 3,
-        name: "Sleeve Stripe T-Shirt",
+        name: "Dictum dis vel platea",
         price: "$78",
         originalPrice: "$130",
         rating: 4.3,
@@ -31,7 +31,7 @@ const products = [
     },
     {
         id: 4,
-        name: "Vertical Striped Shirt",
+        name: "Wisi enim ad minim",
         price: "$114.5",
         originalPrice: "$229",
         rating: 4.5,
@@ -57,7 +57,7 @@ export default function NewArrivals() {
                     return (
                         <div
                             key={product.id}
-                            className={`hover:shadow-md rounded-xl cursor-pointer overflow-hidden transition-transform duration-300 ${skew}`}
+                            className={`hover:shadow-md rounded-xl shadow cursor-pointer overflow-hidden transition-transform duration-300 ${skew}`}
                         >
                             <img
                                 src={product.image}

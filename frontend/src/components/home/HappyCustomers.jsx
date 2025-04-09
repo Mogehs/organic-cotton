@@ -36,7 +36,7 @@ const HappyCustomers = () => {
   return (
     <div className="relative max-w-6xl mx-auto px-4 py-10">
       {/* Heading + Arrows */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-12">
         <h2 className="text-xl md:text-3xl font-bold text-[#09090b]">OUR HAPPY CUSTOMERS</h2>
         <div className="flex gap-3">
           <button
@@ -59,7 +59,7 @@ const HappyCustomers = () => {
         {cards.map((card, idx) => (
           <div
             key={idx}
-            className="keen-slider__slide bg-white rounded-2xl shadow-xl p-6 flex flex-col items-center text-center space-y-4 border border-gray-300"
+            className="keen-slider__slide bg-white h-48 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center space-y-4 border border-gray-300"
           >
             {/* Stars */}
             <div className="flex justify-center gap-1">
@@ -69,7 +69,7 @@ const HappyCustomers = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold flex items-center justify-center gap-2">
+            <h3 className="text-xl font-semibold flex items-center justify-center gap-2 ">
               {card.title}
               <TiTick className="bg-green-700 text-white rounded-full p-1 text-lg" />
             </h3>
