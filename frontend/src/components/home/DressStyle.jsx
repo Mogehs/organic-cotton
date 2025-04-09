@@ -1,50 +1,48 @@
-import React from 'react';
+import React from "react";
 
 const DressStyle = () => {
   return (
-    <div className="p-12 max-w-7xl mx-auto bg-[#f0f0f0] rounded-[4%] my-8">
-        <h1 className='text-2xl md:text-4xl font-bold text-[#09090b]'>BROWSE BY DRESS STYLE</h1>
-        <div className='md:px-20 flex flex-col justify-center items-center gap-6 mt-8'>
-      {/* Top Section: Two Images Side by Side */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div className='md:col-span-2 h-full w-full border border-gray-300 rounded-2xl'>
-        <img
-          src="/home/d1.png"
-          alt="Left Side"
-          className="rounded-2xl w-full h-full shadow-lg object-cover "
-        />
+    <div className="bg-[#f0f0f0] p-10 md:p-16 rounded-[4%] max-w-7xl mx-auto my-12">
+      {/* Heading */}
+      <h1 className="text-2xl md:text-4xl font-bold text-[#09090b] text-center mb-10">
+        BROWSE BY DRESS STYLE
+      </h1>
 
+      {/* Top Section */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-10">
+        <div className="md:col-span-2">
+          <img
+            src="/home/d1.png"
+            alt="Dress Style 1"
+            className="w-full h-full object-cover rounded-2xl shadow-md"
+          />
         </div>
-        <div className='md:col-span-3 h-full border border-gray-300 rounded-2xl'>
-        <img
-          src="/home/d2.png"
-          alt="Right Side"
-          className="rounded-2xl shadow-lg object-cover h-full"
-        />
-
-        </div>
-      </div>
-
-      {/* Bottom Section: Text Left, Image Right */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
-        <div className="md:col-span-3 h-full border border-gray-300 rounded-2xl">
-        <img
-          src="/home/d3.png"
-          alt="Left Side"
-          className="h-full rounded-2xl shadow-lg object-cover"
-        />
-        </div>
-        <div className='md:col-span-2 h-full border border-gray-300 rounded-2xl'>
-        <img
-          src="/home/d4.png"
-          alt="Bottom Right Image"
-          className="rounded-2xl shadow-lg object-cover h-full"
-        />
-
+        <div className="md:col-span-3">
+          <img
+            src="/home/d2.png"
+            alt="Dress Style 2"
+            className="w-full h-full object-cover rounded-2xl shadow-md"
+          />
         </div>
       </div>
 
+      {/* Bottom Section */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+        <div className="md:col-span-3">
+          <img
+            src="/home/d3.png"
+            alt="Dress Style 3"
+            className="w-full h-full object-cover rounded-2xl shadow-md"
+          />
         </div>
+        <div className="md:col-span-2">
+          <img
+            src="/home/d4.png"
+            alt="Dress Style 4"
+            className="w-full h-full object-cover rounded-2xl shadow-md"
+          />
+        </div>
+      </div>
     </div>
   );
 };

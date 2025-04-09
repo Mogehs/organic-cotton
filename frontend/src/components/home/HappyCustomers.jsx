@@ -1,55 +1,61 @@
-import React from 'react';
-import { useKeenSlider } from 'keen-slider/react';
-import 'keen-slider/keen-slider.min.css';
-import { FaStar, FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import React from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
+import { FaStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
 
 const cards = [
   {
-    title: 'sara gujjar',
-    description: 'sara gujjar powerful JavaScript library for building user interfaces efficiently using components...',
+    title: "Sara Gujjar",
+    description:
+      "Sara Gujjar is a powerful JavaScript library for building user interfaces efficiently using components...",
   },
   {
-    title: 'ali jutt',
-    description: 'ali jutt combines images, typography, and color to communicate ideas visually...',
+    title: "Ali Jutt",
+    description:
+      "Ali Jutt combines images, typography, and color to communicate ideas visually...",
   },
   {
-    title: 'ayesha khan',
-    description: 'ayesha khan is an electronic device that processes data and performs tasks based on instructions...',
+    title: "Ayesha Khan",
+    description:
+      "Ayesha Khan is an electronic device that processes data and performs tasks based on instructions...",
   },
   {
-    title: 'haroon shah',
-    description: 'haroon shah is the process of attracting and converting potential customers into leads...',
+    title: "Haroon Shah",
+    description:
+      "Haroon Shah is the process of attracting and converting potential customers into leads...",
   },
 ];
 
 const HappyCustomers = () => {
   const [sliderRef, instanceRef] = useKeenSlider({
     breakpoints: {
-      '(min-width: 768px)': {
-        slides: { perView: 2, spacing: 30 }, // 2 cards for md and up
+      "(min-width: 768px)": {
+        slides: { perView: 2, spacing: 24 },
       },
     },
-    slides: { perView: 1, spacing: 15 }, // 1 card for below md
+    slides: { perView: 1, spacing: 16 },
   });
 
   return (
-    <div className="relative max-w-6xl mx-auto px-4 py-10">
-      {/* Heading + Arrows */}
-      <div className="flex items-center justify-between mb-12">
-        <h2 className="text-xl md:text-3xl font-bold text-[#09090b]">OUR HAPPY CUSTOMERS</h2>
+    <section className="max-w-6xl mx-auto px-4 py-16">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row items-center justify-between mb-12">
+        <h2 className="text-2xl md:text-4xl font-bold text-[#09090b] mb-4 md:mb-0">
+          Our Happy Customers
+        </h2>
         <div className="flex gap-3">
           <button
             onClick={() => instanceRef.current?.prev()}
-            className="bg-white p-2 cursor-pointer rounded-full shadow-md hover:bg-gray-100 transition"
+            className="bg-white p-2 rounded-full shadow hover:bg-gray-100 transition"
           >
-            <FaArrowLeft className="text-xl text-[#09090b]" />
+            <FaArrowLeft className="text-lg text-[#09090b]" />
           </button>
           <button
             onClick={() => instanceRef.current?.next()}
-            className="bg-white p-2 cursor-pointer rounded-full shadow-md hover:bg-gray-100 transition"
+            className="bg-white p-2 rounded-full shadow hover:bg-gray-100 transition"
           >
-            <FaArrowRight className="text-xl text-[#09090b]" />
+            <FaArrowRight className="text-lg text-[#09090b]" />
           </button>
         </div>
       </div>
@@ -59,27 +65,29 @@ const HappyCustomers = () => {
         {cards.map((card, idx) => (
           <div
             key={idx}
-            className="keen-slider__slide bg-white h-48 rounded-2xl shadow-xl p-6 flex flex-col items-center text-center space-y-4 border border-gray-300"
+            className="keen-slider__slide bg-white rounded-2xl shadow-md p-6 flex flex-col gap-3 items-center text-center border border-gray-200 transition hover:shadow-xl"
           >
             {/* Stars */}
-            <div className="flex justify-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <FaStar key={i} className="text-xl text-yellow-500" />
+            <div className="flex justify-center gap-1 text-yellow-500">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <FaStar key={i} className="text-base" />
               ))}
             </div>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold flex items-center justify-center gap-2 ">
+            <h3 className="text-lg md:text-xl font-semibold flex items-center gap-2 text-[#09090b]">
               {card.title}
-              <TiTick className="bg-green-700 text-white rounded-full p-1 text-lg" />
+              <TiTick className="bg-green-600 text-white rounded-full p-1 text-sm" />
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600">{card.description}</p>
+            <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+              {card.description}
+            </p>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

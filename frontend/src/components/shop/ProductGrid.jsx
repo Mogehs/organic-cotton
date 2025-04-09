@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import ReactPaginate from 'react-paginate';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import ReactPaginate from "react-paginate";
 import { FiUser, FiHeart, FiShoppingCart } from "react-icons/fi";
-import { useNavigate } from 'react-router-dom';  
+import { useNavigate } from "react-router-dom";
 
 const ProductGrid = () => {
-  const products = useSelector(state => state.shop.filteredProducts);
+  const products = useSelector((state) => state.shop.filteredProducts);
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 12;
 
@@ -13,15 +13,14 @@ const ProductGrid = () => {
   const currentItems = products.slice(offset, offset + itemsPerPage);
   const pageCount = Math.ceil(products.length / itemsPerPage);
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
-
   const handleCartClick = (productId) => {
-    navigate(`/cart/${productId}`);  
+    navigate(`/cart/${productId}`);
   };
 
   return (
@@ -41,17 +40,14 @@ const ProductGrid = () => {
 
               <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition duration-300">
                 <div
-                  onClick={() => handleCartClick(product.id)}  
+                  onClick={() => handleCartClick(product.id)}
                   className="bg-medium-color p-3 rounded-md hover:bg-dark-color transition duration-300 cursor-pointer w-50"
                 >
-<div className="flex items-center justify-center gap-2 text-white">
-    <FiShoppingCart />
-    <span>Add to Cart</span>
-  </div>
-  
+                  <div className="flex items-center justify-center gap-2 text-white">
+                    <FiShoppingCart />
+                    <span>Add to Cart</span>
+                  </div>
                 </div>
-                
-               
               </div>
             </div>
 
@@ -59,9 +55,7 @@ const ProductGrid = () => {
 
             <div className="text-dark-color text-sm mb-1">
               {Array.from({ length: 5 }, (_, i) => (
-                <span key={i}>
-                  {i < product.rating ? '★' : '☆'}
-                </span>
+                <span key={i}>{i < product.rating ? "★" : "☆"}</span>
               ))}
             </div>
 
@@ -69,17 +63,16 @@ const ProductGrid = () => {
           </div>
         ))}
       </div>
-
       <ReactPaginate
         previousLabel={"←"}
         nextLabel={"→"}
         pageCount={pageCount}
         onPageChange={handlePageClick}
-        containerClassName="flex justify-center flex-wrap gap-2 text-sm mt-6"
-        pageClassName="px-4 py-2 border border-dark-color bg-dark-color text-white rounded-md cursor-pointer"
-        activeClassName="text-black border-dark-color bg-light-color"
-        previousClassName="px-3 py-1 border border-medium-color bg-white rounded-md cursor-pointer"
-        nextClassName="px-3 py-1 border border-medium-color bg-white rounded-md cursor-pointer"
+        containerClassName="flex justify-center flex-wrap gap-2 mt-6"
+        pageClassName="text-sm text-white bg-dark-color border border-dark-color rounded-lg px-4 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
+        activeClassName="bg-white text-dark-color font-semibold border-highlight"
+        previousClassName="text-sm bg-white text-dark-color border border-medium-color rounded-lg px-3 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
+        nextClassName="text-sm bg-white text-dark-color border border-medium-color rounded-lg px-3 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
         disabledClassName="opacity-50 cursor-not-allowed"
       />
     </div>

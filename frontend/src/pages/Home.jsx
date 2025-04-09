@@ -11,14 +11,14 @@ import PopularStore from "../components/home/PopularStore.JSX";
 const Home = () => {
   return (
     <div>
-      <HeroSection/>
-      <NewArrivals/>
-      <TopSelling/>
-      <BabyCategories/>
-      <DressStyle/>
-      <PopularStore/>
-      <HappyCustomers/>
-      <StayUpto/>
+      <HeroSection />
+      <TopSelling />
+      <BabyCategories />
+      <NewArrivals />
+      {/* <DressStyle /> */}
+      <PopularStore />
+      <HappyCustomers />
+      <StayUpto />
     </div>
   );
 };

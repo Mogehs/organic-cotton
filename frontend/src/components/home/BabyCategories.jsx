@@ -1,34 +1,37 @@
-import React from 'react';
+import React from "react";
 
 const cardData = [
   { title: "Bath Toys", image: "/home/1.jpg" },
   { title: "Figures Play", image: "/home/2.jpg" },
   { title: "Learning", image: "/home/3.jpg" },
-  { title: "Muscial", image: "/home/4.jpg" },
+  { title: "Musical", image: "/home/4.jpg" },
 ];
 
 const BabyCategories = () => {
   return (
-    <section className="text-center py-10 bg-gray-100 mt-7">
-      {/* Main Title */}
-      <h1 className="text-2xl font-bold text-gray-700 mb-10 uppercase ">
+    <section className="py-16 px-4 bg-[#fdf6f2]">
+      {/* Title */}
+      <h2 className="text-3xl md:text-5xl font-bold text-[var(--color-dark-color)] text-center uppercase mb-12">
         Categories
-      </h1>
+      </h2>
 
-      {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 px-4 max-w-6xl mx-auto cursor-pointer">
+      {/* Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
         {cardData.map((card, index) => (
           <div
             key={index}
-            className="relative h-48 md:h-56  rounded-2xl shadow-lg overflow-hidden transform transition duration-300 hover:shadow-2xl hover:scale-105"
+            className="relative h-52 md:h-64 rounded-3xl shadow-md overflow-hidden group transition-transform duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
             style={{
               backgroundImage: `url(${card.image})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           >
-            <div className="absolute inset-0  flex items-center justify-center">
-              <h3 className="text-white text-lg font-semibold">{card.title}</h3>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition duration-300 flex items-center justify-center">
+              <h3 className="text-white text-xl md:text-2xl font-semibold tracking-wide drop-shadow-md">
+                {card.title}
+              </h3>
             </div>
           </div>
         ))}
