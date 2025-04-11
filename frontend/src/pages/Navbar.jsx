@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-50 sticky top-0">
-      {/* Mobile Menu */}
+      
       {menufirst && (
         <div className="absolute md:hidden top-0 left-0 bg-[#f5f1e6] w-full sm:w-[70vw] h-screen z-40">
           <button
@@ -55,7 +55,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="/blogs"
+                  to="/blog"
                   className="hover:text-[#ff9800] transition-colors"
                 >
                   Blogs
@@ -82,7 +82,7 @@ const Navbar = () => {
         </div>
       )}
 
-      {/* Logo and Desktop Nav */}
+      
       <div className="flex items-center">
         <div className="text-3xl font-extrabold cursor-pointer">
           <img
@@ -104,7 +104,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/blogs"
+              to="/blog"
               className="hover:text-[#ff9800] transition-colors"
             >
               Blogs

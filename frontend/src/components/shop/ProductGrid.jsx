@@ -69,8 +69,8 @@ const ProductGrid = () => {
         pageCount={pageCount}
         onPageChange={handlePageClick}
         containerClassName="flex justify-center flex-wrap gap-2 mt-6"
-        pageClassName="text-sm text-white bg-dark-color border border-dark-color rounded-lg px-4 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
-        activeClassName="bg-white text-dark-color font-semibold border-highlight"
+        pageClassName="text-sm text-dark-color bg-light-color border border-dark-color rounded-lg px-4 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
+        activeClassName="bg-medium-color text-dark-color font-semibold border-highlight"
         previousClassName="text-sm bg-white text-dark-color border border-medium-color rounded-lg px-3 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
         nextClassName="text-sm bg-white text-dark-color border border-medium-color rounded-lg px-3 py-2 hover:bg-highlight hover:text-black transition-all duration-200 cursor-pointer"
         disabledClassName="opacity-50 cursor-not-allowed"

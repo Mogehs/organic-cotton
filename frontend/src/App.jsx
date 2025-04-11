@@ -14,6 +14,8 @@ import Studios from "./pages/Studios";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import CartList from "./pages/CartList";
+import Blog from "./pages/Blog";                // Blog List page
+import BlogDetail from "./components/blog/BlogDetail"; // Blog Details page
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -31,6 +33,8 @@ const router = createBrowserRouter([
       { path: "/studios", element: <Studios /> },
       { path: "/newarrivel", element: <NewArrivel /> },
       { path: "/hoodies", element: <Hoodies /> },
+      { path: "/blog", element: <Blog /> },
+      { path: "/blog/:id", element: <BlogDetail /> },
       { path: "/jeanes", element: <Jeanes /> },
       { path: "/tshirts", element: <Tshirt /> },
       { path: "/shirts", element: <Shirt /> },
