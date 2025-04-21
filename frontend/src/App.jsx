@@ -20,6 +20,7 @@ import { ToastContainer } from "react-toastify";
 import Blog from "./pages/Blog";
 import BlogDetail from "./components/blog/BlogDetail";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from "./pages/Profile";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -64,6 +65,7 @@ const router = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },
+      { path: "/profile", element: <Profile /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },
