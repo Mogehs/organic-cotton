@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import { FaAngleRight } from "react-icons/fa";
 import { RxCross1 } from "react-icons/rx";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [menufirst, setfirst] = useState(false);
@@ -27,9 +27,10 @@ const Navbar = () => {
     setShowCart(false);
   };
 
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   return (
     <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-50 sticky top-0">
-      
       {menufirst && (
         <div className="absolute md:hidden top-0 left-0 bg-[#f5f1e6] w-full sm:w-[70vw] h-screen z-40">
           <button
@@ -41,14 +42,14 @@ const Navbar = () => {
           <div className="p-4 mt-10">
             <ul className="flex flex-col gap-5 text-xl text-center">
               <li>
-                <Link to="/" className="hover:text-[#ff9800] transition-colors">
+                <Link to="/" className="hover:text-[#d8cbb3] transition-colors">
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/shop"
-                  className="hover:text-[#ff9800] transition-colors"
+                  className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Products
                 </Link>
@@ -56,7 +57,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/blog"
-                  className="hover:text-[#ff9800] transition-colors"
+                  className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Blogs
                 </Link>
@@ -64,7 +65,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/about"
-                  className="hover:text-[#ff9800] transition-colors"
+                  className="hover:text-[#d8cbb3] transition-colors"
                 >
                   About Us
                 </Link>
@@ -72,7 +73,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/contact"
-                  className="hover:text-[#ff9800] transition-colors"
+                  className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Contact Us
                 </Link>
@@ -82,7 +83,6 @@ const Navbar = () => {
         </div>
       )}
 
-      
       <div className="flex items-center">
         <div className="text-3xl font-extrabold cursor-pointer">
           <img
@@ -93,27 +93,24 @@ const Navbar = () => {
         </div>
         <ul className="hidden md:flex gap-6 text-lg ml-10 font-semibold">
           <li>
-            <Link to="/" className="hover:text-[#ff9800] transition-colors">
+            <Link to="/" className="hover:text-[#d8cbb3] transition-colors">
               Home
             </Link>
           </li>
           <li>
-            <Link to="/shop" className="hover:text-[#ff9800] transition-colors">
+            <Link to="/shop" className="hover:text-[#d8cbb3] transition-colors">
               Products
             </Link>
           </li>
           <li>
-            <Link
-              to="/blog"
-              className="hover:text-[#ff9800] transition-colors"
-            >
+            <Link to="/blog" className="hover:text-[#d8cbb3] transition-colors">
               Blogs
             </Link>
           </li>
           <li>
             <Link
               to="/about"
-              className="hover:text-[#ff9800] transition-colors"
+              className="hover:text-[#d8cbb3] transition-colors"
             >
               About Us
             </Link>
@@ -121,7 +118,7 @@ const Navbar = () => {
           <li>
             <Link
               to="/contact"
-              className="hover:text-[#ff9800] transition-colors"
+              className="hover:text-[#d8cbb3] transition-colors"
             >
               Contact Us
             </Link>
@@ -133,22 +130,26 @@ const Navbar = () => {
       <div className="hidden md:flex items-center gap-6 relative">
         <div ref={cartRef}>
           <button
-            className="flex items-center gap-2 text-md font-bold hover:text-[#ff9800] transition-colors"
+            className="flex items-center gap-2 text-md font-bold hover:text-[#d8cbb3] transition-colors"
             onClick={LookShowCart}
           >
             My Cart <FiShoppingCart className="text-xl" />
           </button>
 
           {ShowsCart && (
-            <div className="absolute top-14 right-28 bg-[#3e3a33] w-56 rounded p-4 shadow-xl z-30">
+            <div className="absolute top-14 right-28 bg-[#3e3a33] w-56 rounded p-2 shadow-xl z-30">
               <ul className="space-y-2 text-center">
-                {[...Array(5)].map((_, i) => (
-                  <li key={i} className="text-white">
-                    <Link to={`/cart/${i + 1}`}>Cart{i + 1}</Link>
+                {cartItems.map((item, i) => (
+                  <li
+                    key={i}
+                    className="text-white flex items-center gap-2 border border-[#d8cbb3] rounded-md"
+                  >
+                    <img src={item.image} alt="" className="h-12" />
+                    <Link to={`/cart/${item.id}`}>{item.title}</Link>
                   </li>
                 ))}
                 <Link to="/cartlist">
-                  <button className="mt-3 w-full bg-white hover:bg-light-color py-2 rounded font-semibold">
+                  <button className="mt-3 w-full bg-white hover:bg-[#d8cbb3] py-2 rounded font-semibold">
                     Proceed to Checkout
                   </button>
                 </Link>
@@ -159,7 +160,7 @@ const Navbar = () => {
 
         <div ref={accountRef}>
           <button
-            className="flex items-center gap-1 text-md font-bold hover:text-[#ff9800] transition-colors"
+            className="flex items-center gap-1 text-md font-bold hover:text-[#d8cbb3] transition-colors"
             onClick={LookAccountCart}
           >
             Account <RiArrowDropDownLine className="text-3xl" />
@@ -187,7 +188,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/sign-out"
-                    className="mt-3 w-full text-amber-950 bg-white hover:bg-light-color p-2 rounded font-semibold"
+                    className="mt-3 w-full text-amber-950 bg-white hover:bg-[#d8cbb3] p-2 rounded font-semibold"
                   >
                     Sign Out
                   </Link>
