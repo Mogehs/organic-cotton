@@ -17,6 +17,8 @@ import CartList from "./pages/CartList";
 import NotFoundPage from "./pages/NotFoundPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import { ToastContainer } from "react-toastify";
+import Blog from "./pages/Blog";
+import BlogDetail from "./components/blog/BlogDetail";
 import "react-toastify/dist/ReactToastify.css";
 
 const MainLayout = () => (
