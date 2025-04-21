@@ -14,9 +14,29 @@ import Studios from "./pages/Studios";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import CartList from "./pages/CartList";
+import NotFoundPage from "./pages/NotFoundPage";
+import ScrollToTop from "./utils/ScrollToTop";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
+    <ScrollToTop />
+    <ToastContainer
+      position="top-center"
+      autoClose={3000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      toastClassName={() =>
+        "rounded-xl shadow-lg bg-[#fdfaf4] text-[#4C3C2A] font-medium px-6 py-4 transition duration-300 ease-in-out"
+      }
+      bodyClassName="text-sm leading-relaxed"
+      progressClassName="bg-[#4C3C2A]"
+    />
     <Navbar />
     <Outlet />
     <Footer />
@@ -28,6 +48,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/home", element: <Home /> },
       { path: "/studios", element: <Studios /> },
       { path: "/newarrivel", element: <NewArrivel /> },
       { path: "/hoodies", element: <Hoodies /> },
@@ -41,7 +62,7 @@ const router = createBrowserRouter([
       { path: "/cartlist", element: <CartList /> },
     ],
   },
-  { path: "*", element: <div>404 Not Found</div> },
+  { path: "*", element: <NotFoundPage /> },
 ]);
 
 function App() {

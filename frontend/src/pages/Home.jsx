@@ -18,7 +18,7 @@ const Home = () => {
       {/* <DressStyle /> */}
       <PopularStore />
       <HappyCustomers />
-      <StayUpto />
+      {/* <StayUpto /> */}
     </div>
   );
 };

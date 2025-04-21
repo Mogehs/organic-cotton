@@ -71,19 +71,18 @@ const products = [
 export default function OnSale() {
   return (
     <section className="mt-20 max-w-7xl mx-auto px-6 md:px-12">
-     <div className="max-w-7xl mx-auto px-6 md:px-12 mb-14">
-      <div className="flex items-center text-gray-600 text-sm font-medium">
-
-        {/* Breadcrumb navigation */}
-        <div className="flex items-center space-x-2 text-lg ">
-          <span className="text-gray-500 ">Home</span>
-          <FaChevronRight className="text-gray-400 text-xs" />
-          <span className="text-gray-500">Shop</span>
-          <FaChevronRight className="text-gray-400 text-xs" />
-          <span className="text-black font-semibold">On Sale</span>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-14">
+        <div className="flex items-center text-gray-600 text-sm font-medium">
+          {/* Breadcrumb navigation */}
+          <div className="flex items-center space-x-2 text-lg ">
+            <span className="text-gray-500 ">Home</span>
+            <FaChevronRight className="text-gray-400 text-xs" />
+            <span className="text-gray-500">Shop</span>
+            <FaChevronRight className="text-gray-400 text-xs" />
+            <span className="text-black font-semibold">On Sale</span>
+          </div>
         </div>
       </div>
-    </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product, index) => {
           const skewAnimations = [
@@ -141,8 +140,6 @@ export default function OnSale() {
           );
         })}
       </div>
-
-  
     </section>
   );
 }

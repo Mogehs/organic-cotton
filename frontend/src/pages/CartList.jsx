@@ -7,7 +7,6 @@ import {
   clearCart,
 } from "../features/cart/cartSlice";
 import { Link } from "react-router-dom";
-import ShopBanner from "../components/shop/shopBanner";
 import CartBanner from "../components/cart/CartBanner";
 
 const CartList = ({ theme = "light" }) => {
@@ -36,7 +35,7 @@ const CartList = ({ theme = "light" }) => {
           them.
         </p>
         <Link
-          to="/"
+          to="/home"
           className=" text-1xl bg-dark-color text-white px-8 py-4 rounded-md hover:bg-medium-color transition-all font-fredoka"
         >
           ⤺ RETURN TO HOME

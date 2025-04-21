@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import ReactPaginate from "react-paginate";
-import { FiUser, FiHeart, FiShoppingCart } from "react-icons/fi";
+import { FaRegEye } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const ProductGrid = () => {
@@ -44,8 +44,8 @@ const ProductGrid = () => {
                   className="bg-medium-color p-3 rounded-md hover:bg-dark-color transition duration-300 cursor-pointer w-50"
                 >
                   <div className="flex items-center justify-center gap-2 text-white">
-                    <FiShoppingCart />
-                    <span>Add to Cart</span>
+                    <FaRegEye />
+                    <span>View Product</span>
                   </div>
                 </div>
               </div>
