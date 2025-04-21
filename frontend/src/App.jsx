@@ -3,6 +3,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import Navbar from "./pages/Navbar";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import NewArrivel from "./pages/NewArrivel";
 import Hoodies from "./pages/Hoodies";
 import Jeanes from "./pages/Jeanes";
@@ -20,7 +21,8 @@ import { ToastContainer } from "react-toastify";
 import Blog from "./pages/Blog";
 import BlogDetail from "./components/blog/BlogDetail";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "./pages/Profile";
+import ProductOrders from "./pages/ProductOrders";
+import Contact from "./pages/Contact";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -52,6 +54,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/home", element: <Home /> },
+      { path: "/about", element: <About /> },
       { path: "/studios", element: <Studios /> },
       { path: "/newarrivel", element: <NewArrivel /> },
       { path: "/hoodies", element: <Hoodies /> },
@@ -65,7 +68,8 @@ const router = createBrowserRouter([
       { path: "/shop", element: <Shop /> },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },
-      { path: "/profile", element: <Profile /> },
+      { path: "/productorders", element: <ProductOrders /> },
+      { path: "/contact", element: <Contact /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },

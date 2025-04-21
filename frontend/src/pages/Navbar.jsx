@@ -173,7 +173,7 @@ const Navbar = () => {
                   <Link to="/account">My Account</Link>
                 </li>
                 <li>
-                  <Link to="/orders">My Orders</Link>
+                  <Link to="/productorders">My Orders</Link>
                 </li>
                 <li>
                   <Link to="/settings">Settings</Link>
