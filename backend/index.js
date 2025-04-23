@@ -5,11 +5,8 @@ import dotenv from "dotenv";
 import userRoutes from "./routes/userRoutes.js";
 import cookieParser from "cookie-parser";
 import productRoutes from "./routes/productRoutes.js";
-import appointmentRoutes from "./routes/appointmentRoutes.js";
-import applicationRoutes from "./routes/applicationRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
-import courseRoutes from "./routes/courseRoutes.js";
 import stripeRoutes from "./routes/stripeRoute.js";
 
 import { stripeWebhook } from "./stripe/stripeWebHook.js";
@@ -35,7 +32,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/cart", cartRoutes);
-app.use("/api/courses", courseRoutes);
 app.use("/api/stripe", stripeRoutes);
 
 // DB connection & Server
