@@ -23,6 +23,7 @@ import BlogDetail from "./components/blog/BlogDetail";
 import "react-toastify/dist/ReactToastify.css";
 import ProductOrders from "./pages/ProductOrders";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
       { path: "/cartlist", element: <CartList /> },
       { path: "/productorders", element: <ProductOrders /> },
       { path: "/contact", element: <Contact /> },
+      { path: "/account", element: <Profile /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiShoppingCart } from "react-icons/fi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
@@ -28,6 +28,26 @@ const Navbar = () => {
   };
 
   const cartItems = useSelector((state) => state.cart.cartItems);
+
+  // Close cart/account dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        cartRef.current &&
+        !cartRef.current.contains(event.target) &&
+        accountRef.current &&
+        !accountRef.current.contains(event.target)
+      ) {
+        setShowCart(false);
+        setAccountCart(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-50 sticky top-0">
@@ -87,7 +107,7 @@ const Navbar = () => {
         <div className="text-3xl font-extrabold cursor-pointer">
           <img
             src="/logo.png"
-            alt=""
+            alt="Logo"
             className="object-cover w-20 sm:w-30 sm:h-14"
           />
         </div>
@@ -175,15 +195,7 @@ const Navbar = () => {
                 <li>
                   <Link to="/productorders">My Orders</Link>
                 </li>
-                <li>
-                  <Link to="/settings">Settings</Link>
-                </li>
-                <li>
-                  <Link to="/favourites">Favourites</Link>
-                </li>
-                <li>
-                  <Link to="/delivery-address">Delivery Address</Link>
-                </li>
+
                 <hr className="pb-2" />
                 <li>
                   <Link
