@@ -6,11 +6,11 @@ import cartReducer from "../features/cart/cartSlice";
 import sliderReducer from "../features/slider/sliderSlice";
 import blogReducer from "../features/blog/blogSlice";
 
-import { stripeApi } from "../services/stripeApi";
-import { cartApi } from "../services/cartApi";
-import { userApi } from "../services/userApi";
-import { productsApi } from "../services/productsApi";
-import { orderApi } from "../services/orderApi";
+import { stripeApi } from "../components/features/stripeApi";
+import { cartApi } from "../components/features/cartApi";
+import { userApi } from "../components/features/usersApi";
+import { productsApi } from "../components/features/productsApi";
+import { orderApi } from "../components/features/ordersApi";
 
 const store = configureStore({
   reducer: {

@@ -24,6 +24,8 @@ import "react-toastify/dist/ReactToastify.css";
 import ProductOrders from "./pages/ProductOrders";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -72,6 +74,8 @@ const router = createBrowserRouter([
       { path: "/productorders", element: <ProductOrders /> },
       { path: "/contact", element: <Contact /> },
       { path: "/account", element: <Profile /> },
+      { path: "/sign-in", element: <SignIn /> },
+      { path: "/sign-up", element: <SignUp /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },
