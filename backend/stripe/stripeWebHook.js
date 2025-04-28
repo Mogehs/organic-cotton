@@ -1,4 +1,5 @@
 import Order from "../models/Order.js";
+import Cart from "../models/Cart.js";
 import Stripe from "stripe";
 
 export const stripeWebhook = async (req, res) => {
@@ -14,16 +15,17 @@ export const stripeWebhook = async (req, res) => {
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
+    console.log(err);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
-    // Find and update the order
     const order = await Order.findOne({
       totalPrice: session.amount_total / 100,
     });
+
     if (order) {
       order.isPaid = true;
       order.paidAt = new Date();
@@ -34,6 +36,11 @@ export const stripeWebhook = async (req, res) => {
         email_address: session.customer_email,
       };
       await order.save();
+
+      const userCart = await Cart.findOne({ userId: session.customer_email });
+      if (userCart) {
+        await Cart.deleteOne({ userId: session.customer_email });
+      }
     }
   }
 

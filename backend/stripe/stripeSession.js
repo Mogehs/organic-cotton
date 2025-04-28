@@ -7,7 +7,6 @@ export const createCheckoutSession = async (req, res) => {
   try {
     const userId = req.params.id;
     const { items, shippingAddress } = req.body;
-    console.log(req.body);
 
     const lineItems = items.map((item) => ({
       price_data: {
@@ -25,7 +24,7 @@ export const createCheckoutSession = async (req, res) => {
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
-      success_url: `${process.env.CLIENT_URL}/success`,
+      success_url: `${process.env.CLIENT_URL}/productorders`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
 
