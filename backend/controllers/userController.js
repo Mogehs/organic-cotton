@@ -217,12 +217,16 @@ export const getUserProfile = async (req, res) => {
 // Update Profile
 export const updateUserProfile = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, username, address, phone } = req.body;
 
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.name = name || user.name;
+    user.username = username || user.username;
+    user.address = address || user.address;
+    user.phone = phone || user.phone;
+
     await user.save();
 
     res.json({ message: "Profile updated", user });
@@ -230,7 +234,6 @@ export const updateUserProfile = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
-
 // Request Password Reset
 export const requestPasswordReset = async (req, res) => {
   try {
@@ -305,10 +308,6 @@ export const getAllUsers = async (req, res) => {
 // Admin: Delete User
 export const deleteUser = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Access denied" });
-    }
-
     await User.findByIdAndDelete(req.params.id);
     res.json({ message: "User deleted" });
   } catch (err) {

@@ -3,8 +3,12 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    username: { type: String, unique: true },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+
+    phone: { type: String },
+    address: { type: String },
 
     role: {
       type: String,
@@ -19,11 +23,7 @@ const userSchema = new mongoose.Schema(
     resetToken: { type: String },
     resetTokenExpires: { type: Date },
 
-    appointments: [
-      { type: mongoose.Schema.Types.ObjectId, ref: "Appointment" },
-    ],
     orders: [{ type: mongoose.Schema.Types.ObjectId, ref: "Order" }],
-    enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
   },
   { timestamps: true }
 );

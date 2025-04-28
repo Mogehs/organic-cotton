@@ -40,12 +40,21 @@ export const getCart = async (req, res) => {
     const cart = await Cart.findOne({ userId: req.user._id }).populate(
       "products.productId"
     );
-    if (!cart) return res.status(404).json({ message: "Cart not found" });
+
+    if (!cart) {
+      return res.status(200).json({ message: "Cart is empty", products: [] });
+    }
+
+    if (cart.products.length === 0) {
+      return res.status(200).json({ ...cart.toObject(), products: [] });
+    }
+
     res.status(200).json(cart);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to get cart", details: error.message });
+    res.status(500).json({
+      error: "Failed to get cart",
+      details: error.message,
+    });
   }
 };
 
@@ -57,9 +66,7 @@ export const removeFromCart = async (req, res) => {
     const cart = await Cart.findOne({ userId: req.user._id });
     if (!cart) return res.status(404).json({ message: "Cart not found" });
 
-    cart.products = cart.products.filter(
-      (p) => p.productId.toString() !== productId
-    );
+    cart.products = cart.products.filter((p) => p._id.toString() !== productId);
     await cart.save();
     res.status(200).json(cart);
   } catch (error) {
@@ -78,5 +85,37 @@ export const clearCart = async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to clear cart", details: error.message });
+  }
+};
+
+// PATCH /api/cart/update
+export const updateCartItem = async (req, res) => {
+  const userId = req.user._id;
+  const { id, quantity } = req.body;
+
+  try {
+    const cart = await Cart.findOne({ userId });
+
+    if (!cart) {
+      return res.status(404).json({ message: "Cart not found" });
+    }
+
+    const itemIndex = cart.products.findIndex(
+      (item) => item._id.toString() === id
+    );
+
+    if (itemIndex === -1) {
+      return res.status(404).json({ message: "Product not found in cart" });
+    }
+
+    // Update the quantity
+    cart.products[itemIndex].quantity = quantity;
+    await cart.save();
+
+    res.status(200).json({ message: "Quantity updated successfully", cart });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Something went wrong", error: error.message });
   }
 };
