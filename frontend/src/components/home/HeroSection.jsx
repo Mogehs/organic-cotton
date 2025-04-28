@@ -19,7 +19,7 @@ export default function HeroSection() {
           </p>
 
           <button className="bg-[#3e3a33] text-[#f5f1e6] px-10 py-3 rounded-full hover:bg-[#574f3d] transition duration-300 font-medium tracking-wider">
-            <Link to="/shop"> Shop Now</Link>
+            <Link to="/products"> Shop Now</Link>
           </button>
 
           {/* Stats */}
@@ -46,7 +46,7 @@ export default function HeroSection() {
             alt="Vintage Fashion"
             className="w-full h-auto object-cover rounded-2xl border border-[#d3c7b3] shadow-lg"
           />
-          <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 text-[#c2a76f] animate-spin-slow">
+          <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 text-[#c2a76f] animate-spin duration-1000">
             <FaStar className="text-4xl" />
           </div>
         </div>

@@ -6,7 +6,7 @@ import DressStyle from "../components/home/DressStyle";
 import HappyCustomers from "../components/home/HappyCustomers";
 import StayUpto from "../components/home/StayUpto";
 import BabyCategories from "../components/home/BabyCategories";
-import PopularStore from "../components/home/PopularStore.JSX";
+import PopularStore from "../components/home/PopularStore";
 
 const Home = () => {
   return (

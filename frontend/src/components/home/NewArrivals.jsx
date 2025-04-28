@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useGetProductsQuery } from "../features/productsApi";
 
 // const products = [
 //   {
@@ -75,7 +76,8 @@ const cardVariants = {
 };
 
 export default function NewArrivals() {
-  const products = useSelector((state) => state.shop.filteredProducts);
+  // const products = useSelector((state) => state.shop.filteredProducts);
+  const { data: products } = useGetProductsQuery();
   const navigate = useNavigate();
   const handleclick = (productId) => {
     navigate(`/cart/${productId}`);
@@ -86,7 +88,7 @@ export default function NewArrivals() {
         NEW ARRIVALS
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {products.slice(0, 5).map((product, index) => (
+        {products?.slice(0, 5).map((product, index) => (
           <motion.div
             key={product.id}
             custom={index}
@@ -99,7 +101,7 @@ export default function NewArrivals() {
               boxShadow: "0px 15px 30px rgba(0, 0, 0, 0.15)",
             }}
             onClick={() => {
-              handleclick(product.id);
+              handleclick(product._id);
             }}
             className="bg-white rounded-2xl overflow-hidden shadow-md transition-all duration-300"
           >
@@ -114,6 +116,7 @@ export default function NewArrivals() {
               </h3>
               <div className="flex items-center gap-1 text-yellow-500 mb-3 text-sm">
                 <FaStar /> <FaStar /> <FaStar />
+                <FaStar />
                 <span className="text-[var(--color-medium-color)] ml-1">
                   {product.rating}
                 </span>
@@ -123,10 +126,10 @@ export default function NewArrivals() {
                   ${product.price}
                 </span>
                 <span className="line-through text-gray-500 md:text-xl">
-                  ${product.originalPrice}
+                  $20
                 </span>
                 <span className="text-sm md:text-md bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold">
-                  {product.off} OFF
+                  10% OFF
                 </span>
               </div>
             </div>
@@ -139,7 +142,7 @@ export default function NewArrivals() {
         whileTap={{ scale: 0.98 }}
         className="flex justify-center mt-14"
       >
-        <Link to="/shop">
+        <Link to="/products">
           <button className="px-10 py-4 bg-gray-200 text-[var(--color-dark-color)] rounded-full font-medium hover:bg-[var(--color-dark-color)] hover:text-white transition-colors duration-300 shadow hover:shadow-lg">
             View all
           </button>

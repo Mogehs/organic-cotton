@@ -1,71 +1,89 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { FaRegEye } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useGetProductsQuery } from "../features/productsApi";
+import { useSelector } from "react-redux";
 
 const ProductGrid = () => {
-  const products = useSelector((state) => state.shop.filteredProducts);
+  const { data: products = [], isLoading, error } = useGetProductsQuery();
+  const category = useSelector((state) => state.product.category);
+  const price = useSelector((state) => state.product.price); // e.g., [14, 288]
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 12;
+  const navigate = useNavigate();
+  const [minPrice, maxPrice] = price;
+
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [category, price]);
+
+  // Filter products based on category AND price
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = category === "All" || product.category === category;
+    const matchesPrice = product.price >= minPrice || product.price <= maxPrice;
+    return matchesCategory && matchesPrice;
+  });
 
   const offset = currentPage * itemsPerPage;
-  const currentItems = products.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(products.length / itemsPerPage);
+  const currentItems = filteredProducts.slice(offset, offset + itemsPerPage);
+  const pageCount = Math.ceil(filteredProducts.length / itemsPerPage);
 
-  const navigate = useNavigate();
+  const handlePageClick = ({ selected }) => setCurrentPage(selected);
 
-  const handlePageClick = ({ selected }) => {
-    setCurrentPage(selected);
-  };
+  const handleViewProduct = (productId) => navigate(`/cart/${productId}`);
 
-  const handleCartClick = (productId) => {
-    navigate(`/cart/${productId}`);
-  };
+  if (isLoading) {
+    return <div className="text-center py-10">Loading products...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-600">
+        Failed to load products.
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-8 flex-1 px-4 py-6 text-dark-color">
+      {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {currentItems.map((product, index) => (
+        {currentItems.map((product) => (
           <div
-            key={index}
-            className="border border-light-color bg-white rounded-lg p-4 shadow-sm transition group hover:border-dark-color"
+            key={product._id}
+            className="border border-light-color bg-white rounded-lg p-4 shadow-sm group transition hover:border-dark-color"
           >
             <div className="relative">
               <img
                 src={product.image}
-                alt={product.title}
-                className="w-full h-60 object-contain mb-3 rounded transform transition-transform duration-500 ease-in-out group-hover:scale-95"
+                alt={product.name}
+                className="w-full h-60 object-contain mb-3 rounded transition-transform duration-500 ease-in-out group-hover:scale-95"
               />
-
+              {/* Hover Overlay */}
               <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition duration-300">
-                <div
-                  onClick={() => handleCartClick(product.id)}
-                  className="bg-medium-color p-3 rounded-md hover:bg-dark-color transition duration-300 cursor-pointer w-50"
+                <button
+                  onClick={() => handleViewProduct(product._id)}
+                  className="bg-medium-color text-white p-3 rounded-md hover:bg-dark-color transition duration-300 flex items-center gap-2"
                 >
-                  <div className="flex items-center justify-center gap-2 text-white">
-                    <FaRegEye />
-                    <span>View Product</span>
-                  </div>
-                </div>
+                  <FaRegEye />
+                  <span>View Product</span>
+                </button>
               </div>
             </div>
 
-            <h3 className="text-sm font-semibold mb-1">{product.title}</h3>
-
-            <div className="text-dark-color text-sm mb-1">
-              {Array.from({ length: 5 }, (_, i) => (
-                <span key={i}>{i < product.rating ? "★" : "☆"}</span>
-              ))}
-            </div>
-
+            {/* Product Info */}
+            <h3 className="text-sm font-semibold mb-1">{product.name}</h3>
             <p className="text-medium-color font-semibold">${product.price}</p>
           </div>
         ))}
       </div>
+
+      {/* Pagination */}
       <ReactPaginate
-        previousLabel={"←"}
-        nextLabel={"→"}
+        previousLabel="←"
+        nextLabel="→"
         pageCount={pageCount}
         onPageChange={handlePageClick}
         containerClassName="flex justify-center flex-wrap gap-2 mt-6"

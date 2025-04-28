@@ -8,7 +8,7 @@
 }
 
 @theme {
-  --font-custom: "MyFont";
+  --font-custom: "MyFont", sans-serif;
   --color-dark-color: #4c3c2a;
   --color-medium-color: #836d54;
   --color-light-color: #d2bea2;

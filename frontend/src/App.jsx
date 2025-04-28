@@ -26,6 +26,7 @@ import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import OTP from "./pages/OTP";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -39,9 +40,6 @@ const MainLayout = () => (
       pauseOnFocusLoss
       draggable
       pauseOnHover
-      toastClassName={() =>
-        "rounded-xl shadow-lg bg-[#fdfaf4] text-[#4C3C2A] font-medium px-6 py-4 transition duration-300 ease-in-out"
-      }
       bodyClassName="text-sm leading-relaxed"
       progressClassName="bg-[#4C3C2A]"
     />
@@ -68,7 +66,7 @@ const router = createBrowserRouter([
       { path: "/shirts", element: <Shirt /> },
       { path: "/shorts", element: <Shorts /> },
       { path: "/onsales", element: <OnSales /> },
-      { path: "/shop", element: <Shop /> },
+      { path: "/products", element: <Shop /> },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },
       { path: "/productorders", element: <ProductOrders /> },
@@ -76,6 +74,7 @@ const router = createBrowserRouter([
       { path: "/account", element: <Profile /> },
       { path: "/sign-in", element: <SignIn /> },
       { path: "/sign-up", element: <SignUp /> },
+      { path: "/otp-verification/:id", element: <OTP /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },

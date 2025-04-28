@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -34,10 +34,10 @@ export const userApi = createApi({
 
     // OTP
     verifyOTP: builder.mutation({
-      query: ({ id, code }) => ({
+      query: ({ id, otp }) => ({
         url: `/users/verify-otp/${id}`,
         method: "POST",
-        body: { code },
+        body: { otp },
       }),
     }),
     resendOTP: builder.mutation({

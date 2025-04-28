@@ -1,38 +1,96 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import {
+  useDeleteUserMutation,
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+} from "../components/features/usersApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/userSlice";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { data: user } = useGetUserProfileQuery();
+  const [updateUser] = useUpdateUserProfileMutation();
+  const [deleteUser] = useDeleteUserMutation();
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+    username: "",
+  });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name || "",
+        phone: user.phone || "",
+        address: user.address || "",
+        username: user.username || "",
+      });
+    }
+  }, [user]);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateUser({ id: user._id, data: formData }).unwrap();
+      toast.success("Profile updated successfully!");
+    } catch (err) {
+      console.error("Update failed:", err);
+      toast.error("Update failed. Try again.");
+    }
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    try {
+      await deleteUser(user?._id).unwrap();
+      localStorage.removeItem("user");
+      dispatch(setUser(null));
+      toast.success("User Deleted Successfully");
+      navigate("/");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-dark text-black font-custom p-4 md:p-10">
+    <div className="min-h-screen bg-dark text-black p-4 md:p-10">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Sidebar Card */}
+        {/* Sidebar */}
         <div className="bg-medium rounded-2xl p-6 shadow-lg text-center md:col-span-1">
-          <img
-            src="/profile.jpg"
-            alt="User"
-            className="w-32 h-32 mx-auto rounded-full border-4 border-light object-cover"
-          />
-          <h2 className="mt-4 text-2xl font-bold">John Doe</h2>
-          <p className="text-light text-sm mt-1">johndoe@example.com</p>
-          <p className="text-gray-400 text-xs mt-1">Member since Jan 2022</p>
-          <button className="mt-6 w-full bg-light text-dark py-2 rounded-lg font-semibold hover:bg-[#a89f8e] transition-colors">
-            Upload New Photo
-          </button>
+          <h2 className="mt-4 text-2xl font-bold">{formData.name}</h2>
+          <p className="text-light text-sm mt-1">{user?.email}</p>
         </div>
 
-        {/* Info Card */}
+        {/* Form */}
         <div className="bg-medium rounded-2xl p-6 shadow-lg md:col-span-2">
           <h3 className="text-xl font-semibold border-b border-light pb-3 mb-4">
             Account Information
           </h3>
-
-          <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <form
+            onSubmit={handleSubmit}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+          >
             <div>
               <label className="block text-sm text-gray-400 mb-1">
                 Full Name
               </label>
               <input
                 type="text"
-                placeholder="John Doe"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 className="w-full p-2 rounded bg-dark border border-light text-black"
               />
             </div>
@@ -42,7 +100,9 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                placeholder="johndoe123"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
                 className="w-full p-2 rounded bg-dark border border-light text-black"
               />
             </div>
@@ -50,16 +110,19 @@ const Profile = () => {
               <label className="block text-sm text-gray-400 mb-1">Email</label>
               <input
                 type="email"
-                placeholder="johndoe@example.com"
+                value={user?.email}
                 disabled
                 className="w-full p-2 rounded bg-dark border border-light text-black"
               />
+              <p className="text-neutral-400">You can't change your email</p>
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-1">Phone</label>
               <input
                 type="text"
-                placeholder="+1 234 567 890"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
                 className="w-full p-2 rounded bg-dark border border-light text-black"
               />
             </div>
@@ -69,20 +132,28 @@ const Profile = () => {
               </label>
               <input
                 type="text"
-                placeholder="123 Main Street, NY"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
                 className="w-full p-2 rounded bg-dark border border-light text-black"
               />
             </div>
+            <div className="sm:col-span-2 flex justify-end gap-4">
+              <button
+                type="submit"
+                className="px-5 py-2 rounded bg-light text-dark font-semibold hover:bg-[#a89f8e] transition-colors"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                className="px-5 py-2 rounded bg-dark-color hover:bg-light-color font-semibold transition-colors text-white hover:text-black"
+                onClick={handleDelete}
+              >
+                Delete Account
+              </button>
+            </div>
           </form>
-
-          <div className="mt-6 flex justify-end gap-4">
-            <button className="px-5 py-2 rounded bg-light text-dark font-semibold hover:bg-[#a89f8e] transition-colors">
-              Save Changes
-            </button>
-            <button className="px-5 py-2 rounded bg-dark-color hover:bg-light-color font-semibold transition-colors text-white hover:text-black">
-              Delete Account
-            </button>
-          </div>
         </div>
       </div>
     </div>

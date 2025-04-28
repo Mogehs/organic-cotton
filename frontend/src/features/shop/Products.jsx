@@ -596,7 +596,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Smart Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img3.png",
@@ -609,7 +609,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Smart Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img3.png",
@@ -623,7 +623,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Wooden Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img11.png",
@@ -636,7 +636,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Wooden Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img11.png",
@@ -649,7 +649,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Wooden Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img11.png",
@@ -662,7 +662,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Wooden Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img11.png",
@@ -675,7 +675,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Smart Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img11.png",
@@ -688,7 +688,7 @@ const Products = [
     price: 20,
     originalPrice: 120,
     off: "80%",
-    rating: 4.5,
+
     category: "Smart Toys",
     description: "Cute baby-sized bear.",
     image: "/shop/img2.png",
@@ -697,7 +697,6 @@ const Products = [
 
   {
     id: 59,
-
     title: "Movement Bear - White Dash",
     price: 20,
     originalPrice: 120,
@@ -709,7 +708,6 @@ const Products = [
   },
   {
     id: 60,
-
     title: "Movement Bear - Fast Fluff",
     price: 20,
     originalPrice: 120,

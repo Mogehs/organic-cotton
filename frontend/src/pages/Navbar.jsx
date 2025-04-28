@@ -3,16 +3,25 @@ import { FiShoppingCart } from "react-icons/fi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RxCross1 } from "react-icons/rx";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useLogoutUserMutation } from "../components/features/usersApi";
+import { setUser } from "../features/userSlice";
+import { toast } from "react-toastify";
+import { useGetCartQuery } from "../components/features/cartApi";
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user.userData);
+  const dispatch = useDispatch();
   const [menufirst, setfirst] = useState(false);
   const [ShowsCart, setShowCart] = useState(false);
   const [AccountCart, setAccountCart] = useState(false);
+  const [logoutUser, { isLoading }] = useLogoutUserMutation();
+  const { data: cartData, isLoading: cartLoading } = useGetCartQuery();
 
   const cartRef = useRef(null);
   const accountRef = useRef(null);
+  const navigate = useNavigate();
 
   const MenuDivTrue = () => setfirst(true);
   const MenuDivHidden = () => setfirst(false);
@@ -27,9 +36,6 @@ const Navbar = () => {
     setShowCart(false);
   };
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
-
-  // Close cart/account dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -48,6 +54,16 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const signOut = async () => {
+    try {
+      await logoutUser();
+      dispatch(setUser(null));
+      toast.success("User Logged Out Succesfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   return (
     <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-50 sticky top-0">
@@ -68,7 +84,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
-                  to="/shop"
+                  to="/products"
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Products
@@ -118,7 +134,10 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/shop" className="hover:text-[#d8cbb3] transition-colors">
+            <Link
+              to="/products"
+              className="hover:text-[#d8cbb3] transition-colors"
+            >
               Products
             </Link>
           </li>
@@ -150,7 +169,7 @@ const Navbar = () => {
       <div className="hidden md:flex items-center gap-6 relative">
         <div ref={cartRef}>
           <button
-            className="flex items-center gap-2 text-md font-bold hover:text-[#d8cbb3] transition-colors"
+            className="flex items-center gap-2 text-md font-bold hover:text-[#d8cbb3] transition-colors cursor-pointer"
             onClick={LookShowCart}
           >
             My Cart <FiShoppingCart className="text-xl" />
@@ -158,57 +177,84 @@ const Navbar = () => {
 
           {ShowsCart && (
             <div className="absolute top-14 right-28 bg-[#3e3a33] w-56 rounded p-2 shadow-xl z-30">
-              <ul className="space-y-2 text-center">
-                {cartItems.map((item, i) => (
-                  <li
-                    key={i}
-                    className="text-white flex items-center gap-2 border border-[#d8cbb3] rounded-md"
-                  >
-                    <img src={item.image} alt="" className="h-12" />
-                    <Link to={`/cart/${item.id}`}>{item.title}</Link>
-                  </li>
-                ))}
-                <Link to="/cartlist">
-                  <button className="mt-3 w-full bg-white hover:bg-[#d8cbb3] py-2 rounded font-semibold">
-                    Proceed to Checkout
-                  </button>
-                </Link>
-              </ul>
-            </div>
-          )}
-        </div>
+              <ul className="">
+                {cartLoading ? (
+                  <p>Loading Cart Items....</p>
+                ) : (
+                  <>
+                    {cartData?.products?.map((item, i) => (
+                      <li
+                        key={i}
+                        className="text-white flex items-center gap-8 border border-[#d8cbb3] rounded-md p-2 mx-auto"
+                      >
+                        <img
+                          src={item?.productId?.image}
+                          alt={item?.productId?.name}
+                          className="h-12 w-12 object-cover rounded-md"
+                        />
+                        <Link
+                          to={`/cart/${item?.productId?._id}`}
+                          className="text-white hover:underline"
+                        >
+                          {item?.productId?.name}
+                        </Link>
+                        <p>{item?.quantity}</p>
+                      </li>
+                    ))}
+                  </>
+                )}
 
-        <div ref={accountRef}>
-          <button
-            className="flex items-center gap-1 text-md font-bold hover:text-[#d8cbb3] transition-colors"
-            onClick={LookAccountCart}
-          >
-            Account <RiArrowDropDownLine className="text-3xl" />
-          </button>
-
-          {AccountCart && (
-            <div className="absolute top-14 right-0 bg-[#3e3a33] w-60 rounded p-4 shadow-xl z-30">
-              <ul className="space-y-2 text-center text-white">
-                <li>
-                  <Link to="/account">My Account</Link>
-                </li>
-                <li>
-                  <Link to="/productorders">My Orders</Link>
-                </li>
-
-                <hr className="pb-2" />
-                <li>
-                  <Link
-                    to="/sign-out"
-                    className="mt-3 w-full text-amber-950 bg-white hover:bg-[#d8cbb3] p-2 rounded font-semibold"
-                  >
-                    Sign Out
+                {cartData?.products?.length !== 0 ? (
+                  <Link to="/cartlist">
+                    <button className="mt-3 w-full bg-white hover:bg-[#d8cbb3] py-2 rounded font-semibold">
+                      Proceed to Checkout
+                    </button>
                   </Link>
-                </li>
+                ) : (
+                  <p className="text-white text-center">Cart Is Empty</p>
+                )}
               </ul>
             </div>
           )}
         </div>
+
+        {user ? (
+          <div ref={accountRef}>
+            <button
+              className="flex items-center gap-1 text-md font-bold hover:text-[#d8cbb3] transition-colors cursor-pointer"
+              onClick={LookAccountCart}
+            >
+              Account <RiArrowDropDownLine className="text-3xl" />
+            </button>
+
+            {AccountCart && (
+              <div className="absolute top-14 right-0 bg-[#3e3a33] w-60 rounded p-4 shadow-xl z-30">
+                <ul className="space-y-2 text-center text-white">
+                  <li>
+                    <Link to="/account">My Account</Link>
+                  </li>
+                  <li>
+                    <Link to="/productorders">My Orders</Link>
+                  </li>
+
+                  <hr className="pb-2" />
+                  <li className="mt-3 w-full text-amber-950 bg-white hover:bg-[#d8cbb3] p-2 rounded font-semibold cursor-pointer">
+                    <button onClick={signOut} disabled={isLoading}>
+                      Sign-Out
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div
+            className="bg-dark-color text-white rounded-md px-2 py-1 cursor-pointer"
+            onClick={() => navigate("/sign-in")}
+          >
+            Sign-In
+          </div>
+        )}
       </div>
 
       {/* Mobile Menu Toggle */}

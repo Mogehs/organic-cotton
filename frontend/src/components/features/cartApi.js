@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = import.meta.env.VITE_API_URL;
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const cartApi = createApi({
   reducerPath: "cartApi",
@@ -10,23 +10,23 @@ export const cartApi = createApi({
   }),
   tagTypes: ["Cart"],
   endpoints: (builder) => ({
-    // POST: Add product to cart
     addToCart: builder.mutation({
-      query: (productData) => ({
+      query: ({ productId, quantity }) => ({
         url: "/cart/add",
         method: "POST",
-        body: productData,
+        body: {
+          productId,
+          quantity,
+        },
       }),
       invalidatesTags: ["Cart"],
     }),
 
-    // GET: Get current cart
     getCart: builder.query({
       query: () => "/cart",
       providesTags: ["Cart"],
     }),
 
-    // DELETE: Remove product from cart
     removeFromCart: builder.mutation({
       query: (productId) => ({
         url: `/cart/remove/${productId}`,
@@ -35,11 +35,22 @@ export const cartApi = createApi({
       invalidatesTags: ["Cart"],
     }),
 
-    // DELETE: Clear cart
     clearCart: builder.mutation({
       query: () => ({
         url: "/cart/clear",
         method: "DELETE",
+      }),
+      invalidatesTags: ["Cart"],
+    }),
+
+    updateCart: builder.mutation({
+      query: ({ id, quantity }) => ({
+        url: "/cart/update",
+        method: "PUT",
+        body: {
+          id,
+          quantity,
+        },
       }),
       invalidatesTags: ["Cart"],
     }),
@@ -51,4 +62,5 @@ export const {
   useGetCartQuery,
   useRemoveFromCartMutation,
   useClearCartMutation,
+  useUpdateCartMutation,
 } = cartApi;

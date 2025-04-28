@@ -1,45 +1,102 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  decrement,
-  increment,
-  removeFromCart,
-  clearCart,
-} from "../features/cart/cartSlice";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CartBanner from "../components/cart/CartBanner";
+import {
+  useGetCartQuery,
+  useUpdateCartMutation,
+  useRemoveFromCartMutation,
+  useClearCartMutation,
+} from "../components/features/cartApi";
+import { useSelector } from "react-redux";
+import { useCreateCheckoutSessionMutation } from "../components/features/stripeApi";
 
-const CartList = ({ theme = "light" }) => {
-  const cartItems = useSelector((state) => state.cart.cartItems);
-  const dispatch = useDispatch();
+const CartList = () => {
+  const { data: cartItems } = useGetCartQuery();
+  const user = useSelector((state) => state.user.userData);
+  const [updateCartItem] = useUpdateCartMutation();
+  const [removeCartItem] = useRemoveFromCartMutation();
+  const [clearCartMutation] = useClearCartMutation();
+  const [createCheckoutSession] = useCreateCheckoutSessionMutation();
+  const [shippingAddress, setShippingAddress] = useState({
+    address: user?.address || "",
+    address2: "",
+    city: "",
+    postalCode: "",
+  });
 
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+  const totalPrice = cartItems?.products?.reduce(
+    (acc, item) => acc + item?.productId?.price * item.quantity,
     0
   );
 
-  const handleIncrement = (id) => dispatch(increment(id));
-  const handleDecrement = (id) => dispatch(decrement(id));
-  const handleRemoveFromCart = (id) => dispatch(removeFromCart(id));
-  const handleClearCart = () => dispatch(clearCart());
+  const handleIncrement = (item) => {
+    updateCartItem({ id: item._id, quantity: item.quantity + 1 });
+  };
 
-  if (cartItems.length === 0) {
+  const handleDecrement = (item) => {
+    if (item.quantity > 1) {
+      updateCartItem({ id: item._id, quantity: item.quantity - 1 });
+    }
+  };
+
+  const handleRemoveFromCart = (item) => {
+    removeCartItem(item._id);
+  };
+
+  const handleClearCart = () => {
+    clearCartMutation();
+  };
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setShippingAddress((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleCheckout = async () => {
+    try {
+      const items = cartItems.products.map((item) => ({
+        productId: item?.productId?._id,
+        quantity: item?.quantity,
+        productName: item?.productId?.title,
+        price: item?.productId?.price,
+      }));
+
+      const result = await createCheckoutSession({
+        items,
+        shippingAddress,
+      }).unwrap();
+
+      if (result?.url) {
+        window.location.href = result.url;
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+    }
+  };
+
+  if (cartItems == null || cartItems?.products?.length === 0) {
     return (
-      <div className="text-center mt-10 h-[79vh]">
-        <div className="text-5xl mb-4">🛒</div>
-        <h2 className="text-3xl font-bold mb-2 font-fredoka text-dark-color">
-          Cartlist is empty.
+      <div className="flex flex-col justify-center items-center mt-10 h-[100dvh] px-4">
+        <div className="text-6xl mb-6 animate-bounce text-[#ff9800]">🛒</div>
+        <h2 className="text-4xl font-bold mb-4 font-fredoka text-dark-color text-center">
+          Your Cart is Empty
         </h2>
-        <p className="text-medium-color mb-4">
-          No products added in the cartlist. You must add some products to cart
-          them.
+        <p className="text-lg text-medium-color mb-6 text-center max-w-md">
+          Looks like you haven't added anything to your cart yet. Browse our
+          collection and add your favorite items to get started.
         </p>
         <Link
           to="/home"
-          className=" text-1xl bg-dark-color text-white px-8 py-4 rounded-md hover:bg-medium-color transition-all font-fredoka"
+          className="bg-medium-color text-white px-8 py-4 rounded-md hover:bg-dark-color transition-all font-fredoka text-lg mt-6"
         >
-          ⤺ RETURN TO HOME
+          ⤺ Return to Home
         </Link>
+        <p className="text-sm text-gray-400 mt-4">
+          Need help? Contact our customer support.
+        </p>
       </div>
     );
   }
@@ -51,24 +108,24 @@ const CartList = ({ theme = "light" }) => {
         <div className="flex flex-col lg:flex-row gap-10">
           <div className="flex-1 overflow-x-auto">
             <div className="w-full overflow-auto">
-              <table className="min-w-[600px] w-full shadow-md rounded overflow-hidden ">
+              <table className="min-w-[600px] w-full shadow-md rounded overflow-hidden">
                 <thead className="bg-light-color text-sm uppercase text-dark-color hidden sm:table-header-group">
                   <tr>
-                    <th className="text-left p-4">Product</th>
-                    <th className="text-left p-4">Price</th>
-                    <th className="text-left p-4">Quantity</th>
-                    <th className="text-left p-4">Remove</th>
+                    <th className="text-left p-4 w-30">Product</th>
+                    <th className="text-left p-4 w-30">Price</th>
+                    <th className="text-left p-4 w-30">Quantity</th>
+                    <th className="text-left p-4 w-30">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.map((item) => (
+                  {cartItems?.products?.map((item) => (
                     <tr
                       key={item.id}
                       className="border-b border-dark-color sm:table-row flex flex-col sm:flex-row gap-2 p-4 sm:p-0"
                     >
                       <td className="p-0 sm:p-4 flex items-center gap-4">
                         <img
-                          src={item.image}
+                          src={item?.productId?.image}
                           alt={item.title}
                           className="w-16 h-16 object-cover border rounded"
                         />
@@ -80,7 +137,7 @@ const CartList = ({ theme = "light" }) => {
                         <span className="sm:hidden text-dark-color block text-xs mb-1">
                           Price
                         </span>
-                        ${item.price.toFixed(2)}
+                        ${item?.productId?.price}
                       </td>
                       <td className="p-0 sm:p-4">
                         <span className="sm:hidden text-dark-color block text-xs mb-1">
@@ -88,14 +145,16 @@ const CartList = ({ theme = "light" }) => {
                         </span>
                         <div className="flex items-center border rounded px-3 py-1 w-max bg-light-color">
                           <button
-                            onClick={() => handleDecrement(item.id)}
+                            onClick={() => handleDecrement(item)}
                             className="px-2 font-bold text-lg"
                           >
                             −
                           </button>
-                          <span className="px-3">{item.quantity}</span>
+                          <span className="px-3 w-10 text-center">
+                            {item.quantity}
+                          </span>
                           <button
-                            onClick={() => handleIncrement(item.id)}
+                            onClick={() => handleIncrement(item)}
                             className="px-2 font-bold text-lg"
                           >
                             +
@@ -107,7 +166,7 @@ const CartList = ({ theme = "light" }) => {
                           Remove
                         </span>
                         <button
-                          onClick={() => handleRemoveFromCart(item.id)}
+                          onClick={() => handleRemoveFromCart(item)}
                           className="text-dark-color hover:text-medium-color transition-all text-xl border-dark-color"
                         >
                           × Remove
@@ -133,54 +192,92 @@ const CartList = ({ theme = "light" }) => {
             <div>
               <div className="flex justify-between text-lg font-medium">
                 <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>${totalPrice}</span>
               </div>
               <hr className="my-3" />
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold mb-3">Shipping</h4>
-              <form className="space-y-2 text-sm">
-                <label className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="shipping"
-                      className="accent-dark-color"
-                    />
-                    <span>Flat rate:</span>
-                  </div>
-                  <span className="text-medium-color">$20.00</span>
-                </label>
-                <label className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="shipping"
-                      className="accent-black"
-                    />
-                    <span>Local pickup:</span>
-                  </div>
-                  <span className="text-medium-color">$25.00</span>
-                </label>
-                <label className="flex items-center gap-2">
+              <h4 className="text-sm font-semibold mb-3">Shipping Address</h4>
+              <form className="space-y-4 text-sm">
+                {/* Shipping Address Input Fields */}
+                <div>
+                  <label htmlFor="address" className="block mb-2">
+                    Address Line 1
+                  </label>
                   <input
-                    type="radio"
-                    name="shipping"
-                    className="accent-black"
+                    id="address"
+                    type="text"
+                    name="address"
+                    value={shippingAddress.address}
+                    onChange={handleAddressChange}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="Enter address"
+                    required
                   />
-                  <span>Free shipping</span>
-                </label>
+                </div>
+
+                <div>
+                  <label htmlFor="address2" className="block mb-2">
+                    Address Line 2 (optional)
+                  </label>
+                  <input
+                    id="address2"
+                    type="text"
+                    name="address2"
+                    value={shippingAddress.address2}
+                    onChange={handleAddressChange}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    placeholder="Apt, suite, unit, etc. (optional)"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="city" className="block mb-2">
+                      City
+                    </label>
+                    <input
+                      id="city"
+                      type="text"
+                      name="city"
+                      value={shippingAddress.city}
+                      onChange={handleAddressChange}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      placeholder="Enter city"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="postalCode" className="block mb-2">
+                      Postal Code
+                    </label>
+                    <input
+                      id="postalCode"
+                      type="text"
+                      name="postalCode"
+                      value={shippingAddress.postalCode}
+                      onChange={handleAddressChange}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      placeholder="Enter postal code"
+                      required
+                    />
+                  </div>
+                </div>
               </form>
               <hr className="my-4" />
             </div>
 
             <div className="flex justify-between items-center text-lg font-semibold">
               <span>Total</span>
-              <span>${totalPrice.toFixed(2)}</span>
+              <span>${totalPrice}</span>
             </div>
 
-            <button className="w-full bg-dark-color text-white py-3 rounded hover:bg-medium-color text-sm font-semibold tracking-wide transition-all">
+            <button
+              onClick={handleCheckout}
+              className="w-full bg-dark-color text-white py-3 rounded hover:bg-medium-color text-sm font-semibold tracking-wide transition-all"
+            >
               Proceed to Checkout
             </button>
           </div>
