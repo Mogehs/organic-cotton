@@ -10,19 +10,16 @@ export const productsApi = createApi({
   }),
   tagTypes: ["Products"],
   endpoints: (builder) => ({
-    // GET: All products
     getProducts: builder.query({
       query: () => "/products",
       providesTags: ["Products"],
     }),
 
-    // GET: Single product by ID
     getProductById: builder.query({
       query: (id) => `/products/${id}`,
       providesTags: (result, error, id) => [{ type: "Products", id }],
     }),
 
-    // POST: Create product
     createProduct: builder.mutation({
       query: (formData) => ({
         url: "/products",
@@ -32,7 +29,6 @@ export const productsApi = createApi({
       invalidatesTags: ["Products"],
     }),
 
-    // PUT: Update product
     updateProduct: builder.mutation({
       query: ({ id, formData }) => ({
         url: `/products/${id}`,
@@ -45,7 +41,6 @@ export const productsApi = createApi({
       ],
     }),
 
-    // DELETE: Delete product
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/products/${id}`,

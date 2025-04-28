@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseUrl = "https://pharmacy-m24m.onrender.com/api";
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 export const stripeApi = createApi({
   reducerPath: "stripeApi",
@@ -10,10 +10,13 @@ export const stripeApi = createApi({
   }),
   endpoints: (builder) => ({
     createCheckoutSession: builder.mutation({
-      query: (sessionData) => ({
-        url: "/stripe/create-checkout-session",
+      query: ({ userId, items, shippingAddress }) => ({
+        url: `/stripe/create-checkout-session/${userId}`,
         method: "POST",
-        body: sessionData,
+        body: {
+          items,
+          shippingAddress,
+        },
       }),
     }),
   }),

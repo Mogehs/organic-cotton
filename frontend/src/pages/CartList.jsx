@@ -23,6 +23,8 @@ const CartList = () => {
     city: "",
     postalCode: "",
   });
+  const userId = user?._id;
+  const [checkLoad, setCheckLoad] = useState(false);
 
   const totalPrice = cartItems?.products?.reduce(
     (acc, item) => acc + item?.productId?.price * item.quantity,
@@ -57,23 +59,28 @@ const CartList = () => {
 
   const handleCheckout = async () => {
     try {
+      setCheckLoad(true);
       const items = cartItems.products.map((item) => ({
         productId: item?.productId?._id,
         quantity: item?.quantity,
-        productName: item?.productId?.title,
+        productName: item?.productId?.name,
         price: item?.productId?.price,
+        image: item?.productId?.image,
       }));
 
-      const result = await createCheckoutSession({
+      const { data } = await createCheckoutSession({
+        userId,
         items,
         shippingAddress,
-      }).unwrap();
+      });
 
-      if (result?.url) {
-        window.location.href = result.url;
+      if (data?.url) {
+        window.location.href = data.url;
       }
     } catch (err) {
       console.error("Checkout error:", err);
+    } finally {
+      setCheckLoad(false);
     }
   };
 
@@ -277,8 +284,9 @@ const CartList = () => {
             <button
               onClick={handleCheckout}
               className="w-full bg-dark-color text-white py-3 rounded hover:bg-medium-color text-sm font-semibold tracking-wide transition-all"
+              disabled={true}
             >
-              Proceed to Checkout
+              {checkLoad ? <p>Proceeding...</p> : <p>Proceed to Checkout</p>}
             </button>
           </div>
         </div>
