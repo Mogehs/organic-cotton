@@ -5,16 +5,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createCheckoutSession = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.params.id;
     const { items, shippingAddress } = req.body;
+    console.log(req.body);
 
     const lineItems = items.map((item) => ({
       price_data: {
         currency: "usd",
         product_data: {
-          name: item.productName,
+          name: item.productName || "Product",
+          images: [item.image],
         },
-        unit_amount: item.price * 100,
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.quantity,
     }));
@@ -27,7 +29,6 @@ export const createCheckoutSession = async (req, res) => {
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
     });
 
-    // Save a pending order
     const newOrder = await Order.create({
       user: userId,
       items: items.map(({ productId, quantity }) => ({
@@ -38,7 +39,7 @@ export const createCheckoutSession = async (req, res) => {
         (sum, item) => sum + item.price * item.quantity,
         0
       ),
-      shippingAddress,
+      shippingAddress: shippingAddress?.address,
       paymentMethod: "Stripe",
     });
 

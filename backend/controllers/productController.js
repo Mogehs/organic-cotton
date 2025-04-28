@@ -29,7 +29,6 @@ export const createProduct = async (req, res) => {
       price,
       stock,
       category,
-
       image: images[0],
       images,
     });
