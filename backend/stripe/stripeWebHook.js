@@ -1,12 +1,12 @@
 import Order from "../models/Order.js";
-import Cart from "../models/Cart.js";
+import Cart from "../models/Cart.js"; // Assuming you have a Cart model
 import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const stripeWebhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;
-
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   try {
     event = stripe.webhooks.constructEvent(
@@ -22,6 +22,9 @@ export const stripeWebhook = async (req, res) => {
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
 
+    const userId = session.metadata.userId; // Access userId from metadata
+
+    // Find and update the order
     const order = await Order.findOne({
       totalPrice: session.amount_total / 100,
     });
@@ -37,10 +40,7 @@ export const stripeWebhook = async (req, res) => {
       };
       await order.save();
 
-      const userCart = await Cart.findOne({ userId: session.customer_email });
-      if (userCart) {
-        await Cart.deleteOne({ userId: session.customer_email });
-      }
+      await Cart.findOneAndDelete({ userId: userId });
     }
   }
 
