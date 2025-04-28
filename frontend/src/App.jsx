@@ -27,6 +27,13 @@ import Profile from "./pages/Profile";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 
+import AdminLayout from './components/Dashboard/admin/AdminLayout';
+import Products from './components/Dashboard/Products';
+import Customers from './components/Dashboard/Customers';
+import Dashboard from './pages/Dashboard/Dashboard';
+import Orders from './components/Dashboard/Orders';
+import Courses from './components/Dashboard/Courses';
+
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
     <ScrollToTop />
@@ -79,6 +86,19 @@ const router = createBrowserRouter([
     ],
   },
   { path: "*", element: <NotFoundPage /> },
+
+  // Admin Routes
+  {
+    path: "/dashboard",
+    element: <AdminLayout />,
+    children: [
+      { path: "", element: <Dashboard /> },
+      { path: "/dashboard/products", element: <Products /> },
+      { path: "/dashboard/customers", element: <Customers /> },
+      { path: "/dashboard/orders", element: <Orders /> },
+      { path: "/dashboard/courses", element: <Courses /> },
+    ],
+  },
 ]);
 
 function App() {
