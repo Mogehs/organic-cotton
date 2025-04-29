@@ -34,11 +34,13 @@ const Orders = () => {
     setIsDeleting(true);
   };
 
-  const filteredOrders = orders.filter(
-    (order) =>
-      order.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      order._id?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredOrders = [...orders]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort newest first
+    .filter(
+      (order) =>
+        order.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order._id?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   if (isLoading) {
     return (
