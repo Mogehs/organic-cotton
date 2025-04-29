@@ -3,27 +3,26 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { FaStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { TiTick } from "react-icons/ti";
-
 const cards = [
   {
-    title: "Sara Gujjar",
+    title: "Isabella Hartman",
     description:
-      "Sara Gujjar is a powerful JavaScript library for building user interfaces efficiently using components...",
+      "Working with this team was a fantastic experience. They delivered exactly what I needed, on time and with great attention to detail.",
   },
   {
-    title: "Ali Jutt",
+    title: "Liam Bennett",
     description:
-      "Ali Jutt combines images, typography, and color to communicate ideas visually...",
+      "I was impressed by their professionalism and communication throughout the project. Highly recommend for anyone looking for quality work.",
   },
   {
-    title: "Ayesha Khan",
+    title: "Ava Sinclair",
     description:
-      "Ayesha Khan is an electronic device that processes data and performs tasks based on instructions...",
+      "They truly understood our vision and brought it to life beautifully. Every step of the process was smooth and efficient.",
   },
   {
-    title: "Haroon Shah",
+    title: "Noah Fischer",
     description:
-      "Haroon Shah is the process of attracting and converting potential customers into leads...",
+      "Exceptional service and support! Their dedication and technical expertise exceeded all expectations.",
   },
 ];
 

@@ -83,7 +83,7 @@ export default function NewArrivals() {
     navigate(`/cart/${productId}`);
   };
   return (
-    <section className="mt-20 max-w-7xl mx-auto px-6 md:px-12 font-[var(--font-custom)]">
+    <section className="py-24 max-w-7xl mx-auto px-6 md:px-12 font-[var(--font-custom)]">
       <h2 className="text-3xl md:text-5xl font-bold text-center text-[var(--color-dark-color)] mb-14">
         NEW ARRIVALS
       </h2>

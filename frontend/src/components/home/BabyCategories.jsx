@@ -9,7 +9,7 @@ const cardData = [
 
 const BabyCategories = () => {
   return (
-    <section className="py-16 px-4 bg-[#fdf6f2]">
+    <section className="py-24 px-4 bg-[#fdf6f2]">
       {/* Title */}
       <h2 className="text-3xl md:text-5xl font-bold text-[var(--color-dark-color)] text-center uppercase mb-12">
         Categories

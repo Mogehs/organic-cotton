@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { filterByTag, resetFilter } from '../../features/blog/blogSlice';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
-
+import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { filterByTag, resetFilter } from "../../features/blog/blogSlice";
+import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
 
 const Blogpage = () => {
   const dispatch = useDispatch();
@@ -30,14 +29,15 @@ const Blogpage = () => {
   };
 
   const cardVariants = {
-    hidden: { opacity: 0, x: -200 },
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: (i) => ({
       opacity: 1,
-      x: 0,
+      y: 0,
+      scale: 1,
       transition: {
         delay: i * 0.1,
-        duration: 0.8,
-        ease: 'easeOut',
+        duration: 0.6,
+        ease: "easeOut",
       },
     }),
   };
@@ -67,9 +67,9 @@ const Blogpage = () => {
   };
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      
-      <div className="flex gap-2 mb-6 flex-wrap">
+    <div className="p-6 max-w-6xl mx-auto font-poppins">
+      {/* Tag Filters */}
+      <div className="flex gap-2 mb-8 flex-wrap">
         <button
           onClick={() => {
             dispatch(resetFilter());
@@ -77,8 +77,8 @@ const Blogpage = () => {
           }}
           className={`px-4 py-2 rounded-full border text-sm font-medium transition-all duration-300 ${
             selectedTag === null
-              ? 'bg-dark-color text-white shadow'
-              : 'hover:bg-black hover:text-white'
+              ? "bg-black text-white shadow"
+              : "hover:bg-black hover:text-white"
           }`}
         >
           All
@@ -92,8 +92,8 @@ const Blogpage = () => {
             }}
             className={`px-4 py-2 rounded-full border text-sm font-medium transition-all duration-300 ${
               selectedTag === tag
-                ? 'bg-dark-color text-white shadow'
-                : 'hover:bg-medium-color hover:text-white'
+                ? "bg-black text-white shadow"
+                : "hover:bg-gray-800 hover:text-white"
             }`}
           >
             {tag}
@@ -101,67 +101,84 @@ const Blogpage = () => {
         ))}
       </div>
 
-      
-      <div className="space-y-8">
-        {currentPosts.map((post, index) => (
-          <motion.div
-            key={post.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-lg transition-transform duration-300 transform hover:-translate-y-1"
-            custom={index}
-            initial="hidden"
-            animate="visible"
-            variants={cardVariants}
-          >
-            <div className="overflow-hidden rounded-t-xl">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-100 object-cover transition-transform duration-500 ease-in-out hover:scale-110"
-              />
-            </div>
-            <div className="p-6">
-              <h2 className="text-2xl font-bold">{post.title}</h2>
-              <p className="text-sm text-dark-color mt-1">
-                {post.date} by {post.author}
-              </p>
-              <p className="text-dark-color mt-3">
-                {post.description.slice(0, 150)}...
-              </p>
-              <Link
-                to={`/blog/${post.id}`}
-                className="mt-4 inline-block text-dark-color font-semibold hover:underline"
-              >
-                Read More →
-              </Link>
-
-              
-              <div className="mt-4 flex items-center gap-6">
-                <button
-                  onClick={() => handleLike(post.id)}
-                  className={`flex items-center space-x-2 text-sm font-medium ${
-                    reactions[post.id]?.like ? 'text-green-600' : 'text-dark-color'
-                  } hover:text-green-700 transition`}
-                >
-                  <ThumbsUp size={18} strokeWidth={2} className="text-dark-color cursor-pointer" />
-                  <span>{reactions[post.id]?.like ? 'Liked' : 'Like'}</span>
-                </button>
-
-                <button
-                  onClick={() => handleDislike(post.id)}
-                  className={`flex items-center space-x-2 text-sm font-medium ${
-                    reactions[post.id]?.dislike ? 'text-red-600' : 'text-dark-color'
-                  } hover:text-red-700 transition`}
-                >
-                  <ThumbsDown size={18} strokeWidth={2} className="text-dark-color cursor-pointer"  />
-
-
-                  <span>{reactions[post.id]?.dislike ? 'Disliked' : 'Dislike'}</span>
-                </button>
+      {/* Blog Cards */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${selectedTag}-${currentPage}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="space-y-8"
+        >
+          {currentPosts.map((post, index) => (
+            <motion.div
+              key={post.id}
+              custom={index}
+              initial="hidden"
+              animate="visible"
+              variants={cardVariants}
+              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-transform duration-300 hover:-translate-y-1"
+            >
+              <div className="overflow-hidden rounded-t-xl">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-64 object-cover transition-transform duration-500 hover:scale-110"
+                />
               </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+              <div className="p-6">
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {post.title}
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">
+                  {post.date} by {post.author}
+                </p>
+                <p className="text-gray-700 mt-3">
+                  {post.description.slice(0, 150)}...
+                </p>
+                <Link
+                  to={`/blog/${post.id}`}
+                  className="mt-4 inline-block text-blue-600 font-semibold hover:underline"
+                >
+                  Read More →
+                </Link>
+
+                {/* Reactions */}
+                <div className="mt-4 flex items-center gap-6">
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleLike(post.id)}
+                    className={`flex items-center space-x-2 text-sm font-medium ${
+                      reactions[post.id]?.like
+                        ? "text-green-600"
+                        : "text-gray-600"
+                    } hover:text-green-700 transition`}
+                  >
+                    <ThumbsUp size={18} />
+                    <span>{reactions[post.id]?.like ? "Liked" : "Like"}</span>
+                  </motion.button>
+
+                  <motion.button
+                    whileTap={{ scale: 0.9 }}
+                    onClick={() => handleDislike(post.id)}
+                    className={`flex items-center space-x-2 text-sm font-medium ${
+                      reactions[post.id]?.dislike
+                        ? "text-red-600"
+                        : "text-gray-600"
+                    } hover:text-red-700 transition`}
+                  >
+                    <ThumbsDown size={18} />
+                    <span>
+                      {reactions[post.id]?.dislike ? "Disliked" : "Dislike"}
+                    </span>
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
 
       {/* Pagination */}
       {filteredPosts.length > postsPerPage && (
@@ -169,10 +186,10 @@ const Blogpage = () => {
           <button
             onClick={handlePrev}
             disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-md border ${
+            className={`px-4 py-2 rounded-md border transition-all ${
               currentPage === 1
-                ? 'bg-light-color text-gray-400 cursor-not-allowed'
-                : 'hover:bg-dark-color hover:text-white'
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "hover:bg-black hover:text-white"
             }`}
           >
             Previous
@@ -180,10 +197,10 @@ const Blogpage = () => {
           <button
             onClick={handleNext}
             disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-md border ${
+            className={`px-4 py-2 rounded-md border transition-all ${
               currentPage === totalPages
-                ? 'bg-light-color text-dark-color cursor-not-allowed'
-                : 'hover:bg-dark-color hover:text-white'
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "hover:bg-black hover:text-white"
             }`}
           >
             Next

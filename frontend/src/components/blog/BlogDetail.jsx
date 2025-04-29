@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ThumbsUp, ThumbsDown } from 'lucide-react';
-import blogPosts from '../../features/blog/Blogs';
+import React, { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { ThumbsUp, ThumbsDown } from "lucide-react";
+import blogPosts from "../../features/blog/Blogs";
 
 const BlogDetail = () => {
   const { id } = useParams();
   const postId = parseInt(id, 10);
   const post = blogPosts.find((post) => post.id === postId);
 
-  const [name, setName] = useState('');
-  const [comment, setComment] = useState('');
+  const [name, setName] = useState("");
+  const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
   const [reactions, setReactions] = useState({
     [postId]: {
@@ -37,10 +37,10 @@ const BlogDetail = () => {
         dislike: false,
       };
       setCommentsList((prev) => [...prev, newComment]);
-      setName('');
-      setComment('');
+      setName("");
+      setComment("");
     } else {
-      alert('Please enter both your name and a comment before submitting.');
+      alert("Please enter both your name and a comment before submitting.");
     }
   };
 
@@ -54,8 +54,12 @@ const BlogDetail = () => {
         [postId]: {
           like: !wasLiked,
           dislike: false,
-          likeCount: wasLiked ? prev[postId].likeCount - 1 : prev[postId].likeCount + 1,
-          dislikeCount: wasDisliked ? prev[postId].dislikeCount - 1 : prev[postId].dislikeCount,
+          likeCount: wasLiked
+            ? prev[postId].likeCount - 1
+            : prev[postId].likeCount + 1,
+          dislikeCount: wasDisliked
+            ? prev[postId].dislikeCount - 1
+            : prev[postId].dislikeCount,
         },
       };
     });
@@ -71,8 +75,12 @@ const BlogDetail = () => {
         [postId]: {
           like: false,
           dislike: !wasDisliked,
-          likeCount: wasLiked ? prev[postId].likeCount - 1 : prev[postId].likeCount,
-          dislikeCount: wasDisliked ? prev[postId].dislikeCount - 1 : prev[postId].dislikeCount + 1,
+          likeCount: wasLiked
+            ? prev[postId].likeCount - 1
+            : prev[postId].likeCount,
+          dislikeCount: wasDisliked
+            ? prev[postId].dislikeCount - 1
+            : prev[postId].dislikeCount + 1,
         },
       };
     });
@@ -99,7 +107,10 @@ const BlogDetail = () => {
       <div className="flex items-center justify-center min-h-screen p-6">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-red-600">Blog not found!</h2>
-          <Link to="/blog" className="text-orange-500 hover:underline mt-4 block">
+          <Link
+            to="/blog"
+            className="text-orange-500 hover:underline mt-4 block"
+          >
             Back to Blogs
           </Link>
         </div>
@@ -120,7 +131,7 @@ const BlogDetail = () => {
           <button
             onClick={handleLike}
             className={`flex items-center space-x-2 text-sm font-medium ${
-              reactions[postId]?.like ? 'text-green-600' : 'text-gray-600'
+              reactions[postId]?.like ? "text-green-600" : "text-gray-600"
             } hover:text-green-700 transition`}
           >
             <ThumbsUp size={18} />
@@ -130,7 +141,7 @@ const BlogDetail = () => {
           <button
             onClick={handleDislike}
             className={`flex items-center space-x-2 text-sm font-medium ${
-              reactions[postId]?.dislike ? 'text-red-600' : 'text-gray-600'
+              reactions[postId]?.dislike ? "text-red-600" : "text-gray-600"
             } hover:text-red-700 transition`}
           >
             <ThumbsDown size={18} />
@@ -138,7 +149,9 @@ const BlogDetail = () => {
           </button>
         </div>
 
-        <h1 className="text-3xl font-bold mt-4 text-dark-color">{post.title}</h1>
+        <h1 className="text-3xl font-bold mt-4 text-dark-color">
+          {post.title}
+        </h1>
         <p className="text-sm text-dark-color mt-2">
           {post.date} by {post.author} | {post.comments} Comments
         </p>
@@ -149,22 +162,32 @@ const BlogDetail = () => {
 
         <div className="border border-dark-color border-dotted p-4 rounded-lg mb-4 bg-light-color">
           <p className="font-semibold italic text-lg text-dark-color">
-            If you’re <span className="font-bold text-dark-color">#toykids</span> include a
-            younger-looking, glowing complexion, it all starts with collagen. include a
-            younger-looking, glowing complexion, it all starts with collagen. include a
-            younger-looking, glowing complexion, it all starts with collagen. include a
-            younger-looking, glowing complexion, it all starts with collagen.
+            If you’re{" "}
+            <span className="font-bold text-dark-color">#toykids</span> include
+            a younger-looking, glowing complexion, it all starts with collagen.
+            include a younger-looking, glowing complexion, it all starts with
+            collagen. include a younger-looking, glowing complexion, it all
+            starts with collagen. include a younger-looking, glowing complexion,
+            it all starts with collagen.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
-          <img src="/home/3.jpg" alt="Baby 1" className="rounded-xl w-full h-56 object-cover" />
-          <img src="/home/3.jpg" alt="Baby 2" className="rounded-xl w-full h-56 object-cover" />
+          <img
+            src="/home/3.jpg"
+            alt="Baby 1"
+            className="rounded-xl w-full h-56 object-cover"
+          />
+          <img
+            src="/home/3.jpg"
+            alt="Baby 2"
+            className="rounded-xl w-full h-56 object-cover"
+          />
         </div>
 
         <p className="mt-4 text-dark-color">
-          Risus interdum maecenas quisque lobortis dignissim sociis sit lacinia sem laoreet
-          vivamus.
+          Risus interdum maecenas quisque lobortis dignissim sociis sit lacinia
+          sem laoreet vivamus.
         </p>
 
         <Link
@@ -174,8 +197,7 @@ const BlogDetail = () => {
           ← Back to Blogs
         </Link>
 
-  
-        <div className="mt-12 flex justify-center bg-white">
+        {/* <div className="mt-12 flex justify-center bg-white">
           <div className="w-full max-w-3xl px-4 py-10">
             <h2 className="text-2xl font-bold mb-4 text-center text-dark-color">Leave A Comment</h2>
 
@@ -252,7 +274,7 @@ const BlogDetail = () => {
               </div>
             )}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

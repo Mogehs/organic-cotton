@@ -1,38 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FaBriefcase, FaMapMarkedAlt, FaHeadset, FaSmile } from 'react-icons/fa';
+import React, { useEffect, useRef, useState } from "react";
+import {
+  FaBriefcase,
+  FaMapMarkedAlt,
+  FaHeadset,
+  FaSmile,
+} from "react-icons/fa";
 
 const statsData = [
   {
     id: 1,
-    title: 'Years of Experience',
+    title: "Years of Experience",
     count: 10,
-    suffix: '+',
+    suffix: "+",
     icon: <FaBriefcase className="text-white text-2xl sm:text-3xl" />,
-    bg: 'bg-dark-color',
+    bg: "bg-dark-color",
   },
   {
     id: 2,
-    title: 'Destinations',
+    title: "Destinations",
     count: 500,
-    suffix: 'k',
+    suffix: "k",
     icon: <FaMapMarkedAlt className="text-white text-2xl sm:text-3xl" />,
-    bg: 'bg-dark-color',
+    bg: "bg-dark-color",
   },
   {
     id: 3,
-    title: 'Customer Support',
+    title: "Customer Support",
     count: 24,
-    suffix: '/7',
+    suffix: "/7",
     icon: <FaHeadset className="text-white text-2xl sm:text-3xl" />,
-    bg: 'bg-dark-color',
+    bg: "bg-dark-color",
   },
   {
     id: 4,
-    title: 'Happy Clients',
+    title: "Happy Clients",
     count: 98,
-    suffix: '%',
+    suffix: "%",
     icon: <FaSmile className="text-white text-2xl sm:text-3xl" />,
-    bg: 'bg-dark-color',
+    bg: "bg-dark-color",
   },
 ];
 
@@ -81,8 +86,10 @@ const StatCard = ({ title, count, suffix, icon, bg }) => {
       >
         {icon}
       </div>
-      <div className="text-white text-base text-[10px] sm:text-lg font-medium mx-auto">{title}</div>
-      <div className="text-[10px] sm:text-2xl font-bold text-dark-color mx-auto">
+      <div className="text-white text-base text-[10px] sm:text-lg font-medium mx-auto">
+        {title}
+      </div>
+      <div className="text-[10px] sm:text-2xl font-bold text-white mx-auto">
         {currentCount}
         {suffix}
       </div>
@@ -92,7 +99,7 @@ const StatCard = ({ title, count, suffix, icon, bg }) => {
 
 const ClientRivew = () => {
   return (
-    <div className="bg-medium-color max-w-7xl mx-auto py-12 px-6 sm:px-8 lg:px-16 md:rounded-3xl mt-0 md:mt-10">
+    <div className="bg-medium-color max-w-6xl mx-auto py-12 px-6 sm:px-8 lg:px-12 md:rounded-3xl my-24">
       <div className="flex md:justify-between justify-center items-center flex-wrap gap-10">
         {statsData.map((stat) => (
           <StatCard

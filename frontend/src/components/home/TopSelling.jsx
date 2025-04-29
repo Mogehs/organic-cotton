@@ -3,14 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useGetProductsQuery } from "../features/productsApi";
 
 export default function TopSelling() {
-  // const products = useSelector((state) => state.shop.filteredProducts);
   const { data: products } = useGetProductsQuery();
   const navigate = useNavigate();
   const handleclick = (productId) => {
     navigate(`/cart/${productId}`);
   };
   return (
-    <div className="border-t-2 border-gray-100 mt-20">
+    <div className="py-24">
       <section className="max-w-7xl mx-auto px-6 md:px-12">
         <h2 className="text-3xl md:text-5xl font-bold text-[var(--color-dark-color)] mb-14 text-center">
           TOP SELLING

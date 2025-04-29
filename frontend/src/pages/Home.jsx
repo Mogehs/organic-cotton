@@ -2,9 +2,7 @@ import React from "react";
 import HeroSection from "../components/home/HeroSection";
 import NewArrivals from "../components/home/NewArrivals";
 import TopSelling from "../components/home/TopSelling";
-import DressStyle from "../components/home/DressStyle";
 import HappyCustomers from "../components/home/HappyCustomers";
-import StayUpto from "../components/home/StayUpto";
 import BabyCategories from "../components/home/BabyCategories";
 import PopularStore from "../components/home/PopularStore";
 
@@ -15,10 +13,8 @@ const Home = () => {
       <TopSelling />
       <BabyCategories />
       <NewArrivals />
-      {/* <DressStyle /> */}
       <PopularStore />
       <HappyCustomers />
-      {/* <StayUpto /> */}
     </div>
   );
 };

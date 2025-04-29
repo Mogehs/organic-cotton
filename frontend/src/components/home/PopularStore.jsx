@@ -4,7 +4,7 @@ import { useGetProductsQuery } from "../features/productsApi";
 export default function PopularStore() {
   const { data: products } = useGetProductsQuery();
   return (
-    <section className="bg-[#fdf6f2] py-16 px-6">
+    <section className="bg-[#fdf6f2] py-24 px-6">
       {/* Title */}
       <div className="text-center mb-12">
         <h2 className="text-sm md:text-lg font-semibold text-[#ff5b5b] uppercase mb-2 tracking-widest">

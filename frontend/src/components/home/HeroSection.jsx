@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <section className="bg-[#f5f1e6] py-16 px-6 md:px-12">
+    <section className="py-16 px-6 md:px-12 bg-re">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         {/* Left Side */}
         <div className="space-y-6">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#3e3a33] leading-tight tracking-wide font-serif">
+          <h1 className="text-3xl md:text-5xl font-bold text-[#3e3a33] leading-tight tracking-wide font-custom">
             FIND CLOTHES THAT MATCH YOUR STYLE
           </h1>
 
@@ -46,7 +46,7 @@ export default function HeroSection() {
             alt="Vintage Fashion"
             className="w-full h-auto object-cover rounded-2xl border border-[#d3c7b3] shadow-lg"
           />
-          <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 text-[#c2a76f] animate-spin duration-1000">
+          <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2 text-[#c2a76f] spin-slow duration-1000">
             <FaStar className="text-4xl" />
           </div>
         </div>

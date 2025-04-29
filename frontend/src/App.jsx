@@ -26,6 +26,7 @@ import Customers from "./components/Dashboard/Customers";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Orders from "./components/Dashboard/Orders";
 import Courses from "./components/Dashboard/Courses";
+import PageWithDelay from "./components/PageWithDelay";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -52,12 +53,18 @@ const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      { path: "/", element: <Home /> },
+      {
+        path: "/",
+        element: <Home />,
+      },
       { path: "/home", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/blog", element: <Blog /> },
       { path: "/blog/:id", element: <BlogDetail /> },
-      { path: "/products", element: <Shop /> },
+      {
+        path: "/products",
+        element: <Shop />,
+      },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },
       { path: "/productorders", element: <ProductOrders /> },

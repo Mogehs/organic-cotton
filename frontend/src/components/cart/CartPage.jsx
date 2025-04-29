@@ -29,9 +29,22 @@ const CartPage = () => {
   if (isError || !product)
     return <div className="p-8 text-center">Product not found!</div>;
 
-  const handleAddToCart = () => {
-    addToCart({ productId: id, quantity: qty });
-    toast.success("Product added to cart successfully");
+  const handleAddToCart = async () => {
+    try {
+      const response = await addToCart({
+        productId: id,
+        quantity: qty,
+      }).unwrap();
+
+      if (response?.success || response?.message === "Product added to cart") {
+        toast.success("Product added to cart successfully");
+      } else {
+        toast.warning("Something went wrong. Try again.");
+      }
+    } catch (error) {
+      console.error("Add to Cart Error:", error);
+      toast.error(error?.data?.message || "Failed to add product to cart");
+    }
   };
 
   return (
