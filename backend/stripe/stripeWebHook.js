@@ -1,5 +1,5 @@
 import Order from "../models/Order.js";
-import Cart from "../models/Cart.js"; // Assuming you have a Cart model
+import Cart from "../models/Cart.js";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -15,21 +15,24 @@ export const stripeWebhook = async (req, res) => {
       process.env.STRIPE_WEBHOOK_SECRET
     );
   } catch (err) {
-    console.log(err);
+    console.error("Webhook verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+  // Handle the completed checkout event
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
+    const { userId, orderId } = session.metadata;
 
-    const userId = session.metadata.userId; // Access userId from metadata
+    try {
+      const order = await Order.findById(orderId);
 
-    // Find and update the order
-    const order = await Order.findOne({
-      totalPrice: session.amount_total / 100,
-    });
+      if (!order) {
+        console.warn("Order not found for ID:", orderId);
+        return res.status(404).json({ message: "Order not found" });
+      }
 
-    if (order) {
+      // Update order payment status
       order.isPaid = true;
       order.paidAt = new Date();
       order.paymentResult = {
@@ -38,9 +41,16 @@ export const stripeWebhook = async (req, res) => {
         update_time: new Date().toISOString(),
         email_address: session.customer_email,
       };
+
       await order.save();
 
-      await Cart.findOneAndDelete({ userId: userId });
+      // Clear cart after successful payment
+      await Cart.findOneAndDelete({ userId });
+
+      console.log("✅ Order marked as paid and cart cleared.");
+    } catch (error) {
+      console.error("Error handling Stripe webhook:", error);
+      return res.status(500).json({ message: "Internal Server Error" });
     }
   }
 

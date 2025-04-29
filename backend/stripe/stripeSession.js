@@ -1,14 +1,32 @@
 import Stripe from "stripe";
 import Order from "../models/Order.js";
-import Cart from "../models/Cart.js"; // Assuming you have a Cart model
+import Cart from "../models/Cart.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export const createCheckoutSession = async (req, res) => {
   try {
-    const userId = req.params.id; // Get the userId from the request params
+    const userId = req.params.id;
     const { items, shippingAddress } = req.body;
 
+    const totalPrice = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+
+    // 1. Create the order first
+    const newOrder = await Order.create({
+      user: userId,
+      items: items.map(({ productId, quantity }) => ({
+        product: productId,
+        quantity,
+      })),
+      totalPrice,
+      shippingAddress,
+      paymentMethod: "Stripe",
+    });
+
+    // 2. Format line items
     const lineItems = items.map((item) => ({
       price_data: {
         currency: "usd",
@@ -21,7 +39,7 @@ export const createCheckoutSession = async (req, res) => {
       quantity: item.quantity,
     }));
 
-    // Create Stripe session with metadata containing the userId
+    // 3. Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -29,27 +47,17 @@ export const createCheckoutSession = async (req, res) => {
       success_url: `${process.env.CLIENT_URL}/productorders`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
       metadata: {
-        userId: userId, // Add userId in metadata
+        userId,
+        orderId: newOrder._id.toString(),
       },
-    });
-
-    // Create a new order in the database
-    const newOrder = await Order.create({
-      user: userId,
-      items: items.map(({ productId, quantity }) => ({
-        product: productId,
-        quantity,
-      })),
-      totalPrice: items.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ),
-      shippingAddress: shippingAddress?.address,
-      paymentMethod: "Stripe",
+      payment_intent_data: {
+        description: `Order for ${items.length} item(s) by User ${userId}`,
+      },
     });
 
     res.json({ url: session.url });
   } catch (err) {
+    console.error("Checkout Session Error:", err.message);
     res.status(500).json({ error: err.message });
   }
 };
