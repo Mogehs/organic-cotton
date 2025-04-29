@@ -284,7 +284,7 @@ const CartList = () => {
             <button
               onClick={handleCheckout}
               className="w-full bg-dark-color text-white py-3 rounded hover:bg-medium-color text-sm font-semibold tracking-wide transition-all"
-              disabled={true}
+              disabled={checkLoad}
             >
               {checkLoad ? <p>Proceeding...</p> : <p>Proceed to Checkout</p>}
             </button>

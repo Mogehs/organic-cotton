@@ -4,14 +4,6 @@ import Navbar from "./pages/Navbar";
 import Footer from "./pages/Footer";
 import Home from "./pages/Home";
 import About from "./pages/About";
-import NewArrivel from "./pages/NewArrivel";
-import Hoodies from "./pages/Hoodies";
-import Jeanes from "./pages/Jeanes";
-import Shorts from "./pages/Shorts";
-import Shirt from "./pages/Shirt";
-import Tshirt from "./pages/Tshirt";
-import OnSales from "./pages/OnSales";
-import Studios from "./pages/Studios";
 import Shop from "./pages/Shop";
 import Cart from "./pages/Cart";
 import CartList from "./pages/CartList";
@@ -28,12 +20,12 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import OTP from "./pages/OTP";
 
-import AdminLayout from './components/Dashboard/admin/AdminLayout';
-import Products from './components/Dashboard/Products';
-import Customers from './components/Dashboard/Customers';
-import Dashboard from './pages/Dashboard/Dashboard';
-import Orders from './components/Dashboard/Orders';
-import Courses from './components/Dashboard/Courses';
+import AdminLayout from "./components/Dashboard/admin/AdminLayout";
+import Products from "./components/Dashboard/Products";
+import Customers from "./components/Dashboard/Customers";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Orders from "./components/Dashboard/Orders";
+import Courses from "./components/Dashboard/Courses";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -63,16 +55,8 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/home", element: <Home /> },
       { path: "/about", element: <About /> },
-      { path: "/studios", element: <Studios /> },
-      { path: "/newarrivel", element: <NewArrivel /> },
-      { path: "/hoodies", element: <Hoodies /> },
       { path: "/blog", element: <Blog /> },
       { path: "/blog/:id", element: <BlogDetail /> },
-      { path: "/jeanes", element: <Jeanes /> },
-      { path: "/tshirts", element: <Tshirt /> },
-      { path: "/shirts", element: <Shirt /> },
-      { path: "/shorts", element: <Shorts /> },
-      { path: "/onsales", element: <OnSales /> },
       { path: "/products", element: <Shop /> },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },

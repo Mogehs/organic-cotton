@@ -41,7 +41,7 @@ const ShopBanner = () => {
   return (
     <div
       {...handlers}
-      className="relative w-full h-[310px] md:h-[550px] overflow-hidden font-opensans bg-light-color"
+      className="relative w-full h-[310px] md:h-[550px] overflow-hidden bg-light-color"
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -60,7 +60,6 @@ const ShopBanner = () => {
           <div className="w-full md:max-w-xl rounded-md space-y-4">
             <motion.h1
               className="text-2xl md:text-[36px] font-bold text-dark-color leading-snug"
-              style={{ fontFamily: "serif" }}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}

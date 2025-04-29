@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCreateProductMutation } from "../features/productsApi";
-import { toast } from "react-toastify"; // ✅ Proper toast import
-import "react-toastify/dist/ReactToastify.css"; // ✅ Make sure to import CSS
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Loader2 } from "lucide-react";
 
 const AddProductOverlay = ({ onClose, onAdd }) => {
   const [createProduct] = useCreateProductMutation();
@@ -21,9 +22,8 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
 
     if (name === "images") {
       const selectedFiles = Array.from(files);
-
       if (selectedFiles.length + newProduct.images.length > 4) {
-        toast.warning("You can only select up to 4 images.");
+        toast.warning("🖼️ You can only upload up to 4 images.");
         return;
       }
 
@@ -41,14 +41,12 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
 
     if (name && category && description && images.length > 0) {
       setIsSubmitting(true);
-
       const formData = new FormData();
       formData.append("name", name);
       formData.append("category", category);
       formData.append("price", parseFloat(price));
       formData.append("stock", parseInt(stock));
       formData.append("description", description);
-
       images.forEach((image) => {
         formData.append("productImages", image);
       });
@@ -60,7 +58,7 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
         onClose();
       } catch (error) {
         console.error("Failed to create product:", error);
-        toast.error("❌ Failed to create product. Try again.");
+        toast.error("❌ Failed to add product. Please try again.");
       } finally {
         setIsSubmitting(false);
       }
@@ -72,24 +70,23 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
   return (
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 backdrop-blur-sm bg-opacity-40 flex items-center justify-center z-50"
+        className="fixed inset-0 z-50 bg-opacity-50 backdrop-blur-sm flex items-center justify-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className="bg-white rounded-lg shadow-lg p-6 w-[90%] md:w-full max-w-4xl"
-          initial={{ scale: 0.8, y: -50, opacity: 0 }}
+          className="bg-[#f4e1c1] text-[#6c4f3d] p-6 rounded-2xl shadow-xl w-[95%] md:w-full max-w-3xl"
+          initial={{ scale: 0.85, y: -50, opacity: 0 }}
           animate={{ scale: 1, y: 0, opacity: 1 }}
-          exit={{ scale: 0.8, y: -50, opacity: 0 }}
+          exit={{ scale: 0.85, y: -50, opacity: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <h2 className="text-xl font-semibold mb-6 text-dark-color">
+          <h2 className="text-2xl font-semibold mb-4 tracking-wide">
             ➕ Add New Product
           </h2>
 
           <div className="flex flex-col md:flex-row gap-6">
-            {/* Left Side Form Fields */}
             <div className="flex-1 space-y-4">
               {["name", "category", "price", "stock"].map((field) => (
                 <input
@@ -102,7 +99,7 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
                   onChange={handleChange}
                   required
                   placeholder={`Enter ${field}`}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-color"
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-[#fff4e1] focus:ring-2 focus:ring-primary-color outline-none transition-all duration-150"
                 />
               ))}
 
@@ -113,52 +110,49 @@ const AddProductOverlay = ({ onClose, onAdd }) => {
                 required
                 rows={4}
                 placeholder="Enter product description"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-color resize-none"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-[#fff4e1] focus:ring-2 focus:ring-primary-color resize-none outline-none transition-all duration-150"
               />
             </div>
 
-            {/* Right Side File Upload + Preview */}
-            <div className="flex-1 flex flex-col justify-between">
+            <div className="flex-1 space-y-3">
               <input
                 type="file"
                 name="images"
                 accept="image/*"
                 multiple
                 onChange={handleChange}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg"
-                required
+                className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-[#fff4e1] transition-all duration-150"
               />
 
-              <div className="mt-4 flex space-x-2 overflow-x-auto">
-                {newProduct.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={URL.createObjectURL(image)}
-                    alt={`Product image ${index + 1}`}
-                    className="h-20 w-20 object-cover rounded-md"
-                  />
-                ))}
-              </div>
+              {newProduct.images.length > 0 && (
+                <div className="flex flex-wrap gap-2 mt-2 max-h-40 overflow-y-auto pr-2">
+                  {newProduct.images.map((image, index) => (
+                    <img
+                      key={index}
+                      src={URL.createObjectURL(image)}
+                      alt={`Preview ${index}`}
+                      className="h-20 w-20 object-cover rounded-md shadow"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="flex justify-end mt-6 space-x-3">
+          <div className="flex justify-end mt-6 gap-3">
             <button
-              className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400 hover:cursor-pointer"
               onClick={onClose}
               disabled={isSubmitting}
+              className="bg-[#d9c0a7] hover:bg-[#b18e64] text-[#6c4f3d] px-4 py-2 rounded transition"
             >
               Cancel
             </button>
             <button
-              className={`${
-                isSubmitting
-                  ? "bg-opacity-60 cursor-not-allowed"
-                  : "hover:bg-[#b8754d]"
-              } bg-[#a8754d] text-white px-4 py-2 rounded`}
               onClick={handleSubmit}
               disabled={isSubmitting}
+              className="flex items-center gap-2 bg-[#a8754d] hover:bg-opacity-90 text-white px-5 py-2 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
+              {isSubmitting && <Loader2 className="animate-spin w-4 h-4" />}
               {isSubmitting ? "Adding..." : "Add Product"}
             </button>
           </div>

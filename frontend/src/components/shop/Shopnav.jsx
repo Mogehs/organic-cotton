@@ -20,10 +20,7 @@ const Shopnav = () => {
   return (
     <div className="w-full min-h-screen text-light-color flex justify-center items-start py-10 px-4">
       <div className="w-full max-w-7xl">
-        <div
-          className="flex justify-between items-center border border-medium-color text-dark-color px-6 py-3 mb-8 rounded shadow-md"
-          style={{ fontFamily: "Fredoka, sans-serif" }}
-        >
+        <div className="flex justify-between items-center border border-medium-color text-dark-color px-6 py-3 mb-8 rounded shadow-md">
           <button
             onClick={() => setShowSidebar(!showSidebar)}
             className="text-sm flex items-center gap-1 border-r border-gray-300 pr-4"

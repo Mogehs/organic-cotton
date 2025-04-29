@@ -41,7 +41,7 @@ const ProductSlider = () => {
     dots: false,
     infinite: true,
     speed: 600,
-    slidesToShow: 4,
+    slidesToShow: 4, // Default number of slides shown on larger screens
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
@@ -49,9 +49,27 @@ const ProductSlider = () => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 3 } },
-      { breakpoint: 768, settings: { slidesToShow: 2 } },
-      { breakpoint: 480, settings: { slidesToShow: 1 } },
+      // Medium screens (1024px or larger)
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3, // Show 3 slides on medium screens
+        },
+      },
+      // Small screens (768px or larger)
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2, // Show 2 slides on smaller screens
+        },
+      },
+      // Extra small screens (480px or larger)
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1, // Show 1 slide on extra small screens
+        },
+      },
     ],
   };
 
