@@ -59,7 +59,7 @@ const Navbar = () => {
     try {
       await logoutUser();
       dispatch(setUser(null));
-      toast.success("User Logged Out Succesfully");
+      toast.success("User Logged Out Successfully");
     } catch (error) {
       toast.error(error.message);
     }
@@ -78,13 +78,18 @@ const Navbar = () => {
           <div className="p-4 mt-10">
             <ul className="flex flex-col gap-5 text-xl text-center">
               <li>
-                <Link to="/" className="hover:text-[#d8cbb3] transition-colors">
+                <Link
+                  to="/"
+                  onClick={MenuDivHidden}
+                  className="hover:text-[#d8cbb3] transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
                 <Link
                   to="/products"
+                  onClick={MenuDivHidden}
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Products
@@ -93,6 +98,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/blog"
+                  onClick={MenuDivHidden}
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Blogs
@@ -101,6 +107,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/about"
+                  onClick={MenuDivHidden}
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
                   About Us
@@ -109,6 +116,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/contact"
+                  onClick={MenuDivHidden}
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
                   Contact Us
@@ -119,8 +127,8 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/account"
-                      className="hover:text-[#d8cbb3] transition-colors"
                       onClick={MenuDivHidden}
+                      className="hover:text-[#d8cbb3] transition-colors"
                     >
                       My Account
                     </Link>
@@ -128,8 +136,8 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/productorders"
-                      className="hover:text-[#d8cbb3] transition-colors"
                       onClick={MenuDivHidden}
+                      className="hover:text-[#d8cbb3] transition-colors"
                     >
                       My Orders
                     </Link>
@@ -137,8 +145,8 @@ const Navbar = () => {
                   <li>
                     <Link
                       to="/cartlist"
-                      className="hover:text-[#d8cbb3] transition-colors"
                       onClick={MenuDivHidden}
+                      className="hover:text-[#d8cbb3] transition-colors"
                     >
                       My Cart
                     </Link>
@@ -230,44 +238,53 @@ const Navbar = () => {
           </button>
 
           {ShowsCart && (
-            <div className="absolute top-14 right-28 bg-[#3e3a33] w-56 rounded p-2 shadow-xl z-30">
-              <ul className="">
+            <div className="absolute top-14 right-28 bg-white w-72 rounded-xl shadow-lg border border-gray-200 z-30 overflow-hidden">
+              <div className="p-4 max-h-96 overflow-y-auto">
                 {cartLoading ? (
-                  <p>Loading Cart Items....</p>
-                ) : (
-                  <>
-                    {cartData?.products?.map((item, i) => (
-                      <li
-                        key={i}
-                        className="text-white flex items-center gap-8 border border-[#d8cbb3] rounded-md p-2 mx-auto"
-                      >
-                        <img
-                          src={item?.productId?.image}
-                          alt={item?.productId?.name}
-                          className="h-12 w-12 object-cover rounded-md"
-                        />
+                  <p className="text-center text-gray-600">
+                    Loading cart items...
+                  </p>
+                ) : cartData?.products?.length ? (
+                  cartData.products.map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-3 py-2 border-b last:border-b-0"
+                    >
+                      <img
+                        src={item?.productId?.image}
+                        alt={item?.productId?.name}
+                        className="h-10 w-10 object-cover rounded-md border"
+                      />
+                      <div className="flex-1">
                         <Link
                           to={`/cart/${item?.productId?._id}`}
-                          className="text-white hover:underline"
+                          onClick={() => setShowCart(false)}
+                          className="text-sm font-medium text-gray-800 hover:underline"
                         >
                           {item?.productId?.name}
                         </Link>
-                        <p>{item?.quantity}</p>
-                      </li>
-                    ))}
-                  </>
+                        <p className="text-xs text-gray-500">
+                          Qty: {item?.quantity}
+                        </p>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500">
+                    Your cart is empty.
+                  </p>
                 )}
+              </div>
 
-                {cartData?.products?.length !== 0 ? (
-                  <Link to="/cartlist">
-                    <button className="mt-3 w-full bg-white hover:bg-[#d8cbb3] py-2 rounded font-semibold">
+              {cartData?.products?.length > 0 && (
+                <div className="border-t px-4 py-3">
+                  <Link to="/cartlist" onClick={() => setShowCart(false)}>
+                    <button className="w-full bg-[#3e3a33] text-white hover:bg-[#555045] py-2 rounded-md font-semibold transition-colors duration-200">
                       Proceed to Checkout
                     </button>
                   </Link>
-                ) : (
-                  <p className="text-white text-center">Cart Is Empty</p>
-                )}
-              </ul>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -285,12 +302,18 @@ const Navbar = () => {
               <div className="absolute top-14 right-0 bg-[#3e3a33] w-60 rounded p-4 shadow-xl z-30">
                 <ul className="space-y-2 text-center text-white">
                   <li>
-                    <Link to="/account">My Account</Link>
+                    <Link to="/account" onClick={() => setAccountCart(false)}>
+                      My Account
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/productorders">My Orders</Link>
+                    <Link
+                      to="/productorders"
+                      onClick={() => setAccountCart(false)}
+                    >
+                      My Orders
+                    </Link>
                   </li>
-
                   <hr className="pb-2" />
                   <li className="mt-3 w-full text-amber-950 bg-white hover:bg-[#d8cbb3] p-2 rounded font-semibold cursor-pointer">
                     <button onClick={signOut} disabled={isLoading}>

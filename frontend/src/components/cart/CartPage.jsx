@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart, Loader2 } from "lucide-react";
 import { FaShippingFast, FaShieldAlt, FaGift, FaUndo } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useGetProductsQuery } from "../features/productsApi";
@@ -10,7 +9,7 @@ import { useAddToCartMutation } from "../features/cartApi";
 const CartPage = () => {
   const { id } = useParams();
   const { data: products, isLoading, isError } = useGetProductsQuery();
-  const [addToCart] = useAddToCartMutation();
+  const [addToCart, { isLoading: isAddingToCart }] = useAddToCartMutation();
   const [product, setProduct] = useState(null);
   const [mainImage, setMainImage] = useState("");
   const [qty] = useState(1);
@@ -36,7 +35,10 @@ const CartPage = () => {
         quantity: qty,
       }).unwrap();
 
-      if (response?.success || response?.message === "Product added to cart") {
+      if (
+        response?.status === 200 ||
+        response?.message === "Product added to cart"
+      ) {
         toast.success("Product added to cart successfully");
       } else {
         toast.warning("Something went wrong. Try again.");
@@ -82,10 +84,22 @@ const CartPage = () => {
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6 w-full">
             <button
-              onClick={() => handleAddToCart(id)}
-              className="bg-dark-color hover:bg-medium-color text-white py-2 px-6 rounded flex items-center justify-center gap-2 w-full sm:w-[200px] md:w-[250px] lg:w-[300px] xl:w-[350px] transition-all duration-300"
+              onClick={handleAddToCart}
+              disabled={isAddingToCart}
+              className={`${
+                isAddingToCart ? "opacity-70 cursor-not-allowed" : ""
+              } bg-dark-color hover:bg-medium-color text-white py-2 px-6 rounded flex items-center justify-center gap-2 w-full sm:w-[200px] md:w-[250px] lg:w-[300px] xl:w-[350px] transition-all duration-300`}
             >
-              <ShoppingCart size={18} /> ADD TO CART
+              {isAddingToCart ? (
+                <>
+                  <Loader2 className="animate-spin" size={18} />
+                  Adding...
+                </>
+              ) : (
+                <>
+                  <ShoppingCart size={18} /> ADD TO CART
+                </>
+              )}
             </button>
             <button className="border p-2 rounded hover:bg-light-color w-full sm:w-12 md:w-16 lg:w-20 h-10 flex items-center justify-center transition-all duration-300">
               <Heart size={20} />
