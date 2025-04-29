@@ -4,9 +4,10 @@ import { ChevronDown, Menu } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSortOption } from "../../features/shop/shopSlice";
 import Sidebar from "./Sidebar";
+import { setSideBar } from "../../features/productsSlice";
 
 const Shopnav = () => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const sideBar = useSelector((state) => state.product.sideBar);
   const [showSort, setShowSort] = useState(false);
   const dispatch = useDispatch();
   const sortOption = useSelector((state) => state.shop.sortOption);
@@ -22,10 +23,12 @@ const Shopnav = () => {
       <div className="w-full max-w-7xl">
         <div className="flex justify-between items-center border border-medium-color text-dark-color px-6 py-3 mb-8 rounded shadow-md">
           <button
-            onClick={() => setShowSidebar(!showSidebar)}
+            onClick={() => {
+              dispatch(setSideBar(!sideBar));
+            }}
             className="text-sm flex items-center gap-1 border-r border-gray-300 pr-4"
           >
-            {showSidebar ? "Hide Sidebar" : "Show Sidebar"} <Menu size={14} />
+            {sideBar ? "Hide Sidebar" : "Show Sidebar"} <Menu size={14} />
           </button>
 
           <div className="relative text-sm px-4 bg-white rounded cursor-pointer">
@@ -55,7 +58,7 @@ const Shopnav = () => {
         </div>
 
         <div className="flex gap-6">
-          {showSidebar && <Sidebar />}
+          {sideBar && <Sidebar />}
           <ProductGrid />
         </div>
       </div>

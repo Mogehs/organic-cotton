@@ -1,16 +1,21 @@
 import React, { useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 import { useGetProductsQuery } from "../features/productsApi";
-import { setCategory, setPrice } from "../../features/productsSlice";
+import {
+  setCategory,
+  setPrice,
+  setSideBar,
+} from "../../features/productsSlice";
+
 const Sidebar = () => {
   const dispatch = useDispatch();
+  const sideBarState = useSelector((state) => state.product.sideBar);
   const { data: products = [] } = useGetProductsQuery();
   const latestProducts = [...products]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 4);
   const [price, setPricing] = useState(20);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const categoryCounts = useMemo(() => {
     const counts = {};
@@ -36,27 +41,24 @@ const Sidebar = () => {
 
   return (
     <>
-      <button
-        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-5 right-5 z-50 text-dark-color p-2 rounded transition md:hidden mt-1"
-      >
-        {isSidebarOpen ? (
-          <FaTimes className="text-2xl" />
-        ) : (
-          <FaBars className="text-2xl" />
-        )}
-      </button>
-
       <div
-        className={`z-40 p-4 overflow-y-auto h-full w-80 fixed md:static top-0 left-0 transform transition-transform duration-300 ease-in-out
+        className={`z-50 overflow-y-auto sm:w-[22rem] w-full h-full fixed md:static -left-0.5 top-13 transform transition-transform duration-300 ease-in-out 
           ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+            sideBarState ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 
           ${
-            isSidebarOpen ? "bg-white shadow-lg" : ""
-          } md:bg-transparent md:shadow-none ml-[5px]`}
+            sideBarState ? "bg-white shadow-lg" : ""
+          } md:bg-transparent md:shadow-none`}
       >
-        <div className="space-y-6 text-gray-500 ">
+        <div className="space-y-6 text-gray-500 p-5 relative">
+          {/* Close button on small screens */}
+          <div className="md:hidden flex justify-end mb-4">
+            <FaTimes
+              className="text-dark-color text-xl cursor-pointer"
+              onClick={() => dispatch(setSideBar(false))}
+            />
+          </div>
+
           <div className="border border-dark-color rounded p-4">
             <h2
               className="font-semibold text-2xl mb-3 border-b border-dark-color pb-2 text-dark-color"
@@ -87,7 +89,7 @@ const Sidebar = () => {
             </div>
           </div>
 
-          <div className="border border-dark-color rounded p-4">
+          <div className="border border-dark-color rounded p-4 z-50">
             <h2
               className="font-semibold text-md mb-3 border-b border-dark-color pb-2 text-dark-color font-Fredoka text-2xl"
               style={{ fontFamily: "Fredoka, sans-serif" }}

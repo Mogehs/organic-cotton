@@ -10,8 +10,6 @@ const statusColors = {
 export default function ProductOrders() {
   const { data: orders = [], isLoading, isError } = useGetMyOrdersQuery();
 
-  console.log(orders);
-
   if (isLoading) {
     return (
       <div className="text-center py-16 text-lg font-medium text-dark-color animate-pulse">

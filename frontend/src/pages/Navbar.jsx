@@ -114,6 +114,60 @@ const Navbar = () => {
                   Contact Us
                 </Link>
               </li>
+              {user ? (
+                <>
+                  <li>
+                    <Link
+                      to="/account"
+                      className="hover:text-[#d8cbb3] transition-colors"
+                      onClick={MenuDivHidden}
+                    >
+                      My Account
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/productorders"
+                      className="hover:text-[#d8cbb3] transition-colors"
+                      onClick={MenuDivHidden}
+                    >
+                      My Orders
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/cartlist"
+                      className="hover:text-[#d8cbb3] transition-colors"
+                      onClick={MenuDivHidden}
+                    >
+                      My Cart
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        signOut();
+                        MenuDivHidden();
+                      }}
+                      className="bg-dark-color text-white px-3 py-2 rounded hover:bg-[#d8cbb3] transition-colors"
+                    >
+                      Sign Out
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <button
+                    onClick={() => {
+                      navigate("/sign-in");
+                      MenuDivHidden();
+                    }}
+                    className="bg-dark-color text-white px-3 py-2 rounded hover:bg-[#d8cbb3] transition-colors"
+                  >
+                    Sign In
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>
