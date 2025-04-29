@@ -59,7 +59,7 @@ const Customers = () => {
 
   return (
     <>
-      <UserSummaryCard />
+      <UserSummaryCard className="grid grid-cols-1 sm:grid-cols-3 gap-4" />
 
       <motion.div
         className="bg-white rounded-xl shadow-xl p-6 mt-6 max-w-full overflow-hidden"

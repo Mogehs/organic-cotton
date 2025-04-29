@@ -35,7 +35,7 @@ const Sidebar = () => {
       {/* Mobile Toggle Button */}
       <div className="md:hidden fixed top-3 left-2 z-25">
         <button
-          className="text-[#dbdad9] bg-[#454142] p-2 rounded-md shadow-lg"
+          className="text-[#dbdad9] bg-dark-color p-2 rounded-md shadow-lg absolute left-65 "
           onClick={() => setIsOpen(true)}
         >
           <MdMenu size={24} />
@@ -43,7 +43,7 @@ const Sidebar = () => {
       </div>
 
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-64 h-screen bg-dk text-white p-5 fixed left-0 top-0 shadow-lg z-20">
+      <aside className="hidden md:block w-64 h-screen bg-dark-color text-white p-5 fixed left-0 top-0 shadow-lg z-20">
         <h1 className="text-2xl font-bold mb-10 font-Fredoka">Admin Pannel</h1>
         <nav className="space-y-4">
           {links.map(({ to, label, icon }) => (
@@ -71,20 +71,20 @@ const Sidebar = () => {
             animate={{ x: 0 }}
             exit={{ x: "-100%" }}
             transition={{ duration: 0.3 }}
-            className="fixed top-0 left-0 h-full w-4/5 bg-black text-white p-5 shadow-lg z-50 md:hidden"
+            className="fixed top-0 left-0 h-full bg-dark-color text-white p-5 shadow-lg z-50 md:hidden w-full"
           >
             {/* Cross Close Button */}
             <div className="absolute top-4 right-4">
               <button
                 onClick={() => setIsOpen(false)}
-                className="text-white mt-16 hover:text-red-400 transition"
+                className="text-white mt-16 hover:text-red-400 transition absolute right-0 -top-14"
               >
                 <MdClose size={24} />
               </button>
             </div>
 
             <h1 className="text-2xl font-bold mb-10 font-Fredoka">
-              Pharma Admin
+              Admin Pannel
             </h1>
             <nav className="space-y-4">
               {links.map(({ to, label, icon }) => (

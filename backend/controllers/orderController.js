@@ -28,12 +28,14 @@ export const createOrder = async (req, res) => {
 // Get all orders (admin usage or filter)
 export const getAllOrders = async (req, res) => {
   try {
-    if (!req.user.isAdmin) {
+    if (!req.user.role == "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
+
     const orders = await Order.find()
-      .populate("userId")
-      .populate("products.productId");
+      .populate("user")
+      .populate("items.product");
+
     res.status(200).json(orders);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch orders", error });
@@ -79,12 +81,13 @@ export const getOrderById = async (req, res) => {
 // Update order status (admin only)
 export const updateOrderStatus = async (req, res) => {
   try {
-    if (!req.user.isAdmin) {
+    if (!req.user.role == "admin") {
       return res.status(403).json({ message: "Unauthorized" });
     }
+
     const { status } = req.body;
 
-    if (!["processing", "shipped", "delivered"].includes(status)) {
+    if (!["Preparing Package", "Ready To Ship", "Delivered"].includes(status)) {
       return res.status(400).json({ message: "Invalid status value" });
     }
 
@@ -92,7 +95,9 @@ export const updateOrderStatus = async (req, res) => {
       req.params.id,
       { status },
       { new: true }
-    );
+    )
+      .populate("items.product")
+      .populate("user");
 
     if (!updatedOrder) {
       return res.status(404).json({ message: "Order not found" });
@@ -104,7 +109,6 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
-// ✅ Mark order as paid after successful Stripe payment (called from webhook)
 export const markOrderAsPaid = async (req, res) => {
   try {
     const { paymentIntentId, paymentResult } = req.body;
