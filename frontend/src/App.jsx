@@ -27,6 +27,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Orders from "./components/Dashboard/Orders";
 import Courses from "./components/Dashboard/Courses";
 import PageWithDelay from "./components/PageWithDelay";
+import ProtectedRoute from "./components/ProdtectedRoutes";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
@@ -82,11 +83,46 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <AdminLayout />,
     children: [
-      { path: "", element: <Dashboard /> },
-      { path: "/dashboard/products", element: <Products /> },
-      { path: "/dashboard/customers", element: <Customers /> },
-      { path: "/dashboard/orders", element: <Orders /> },
-      { path: "/dashboard/courses", element: <Courses /> },
+      {
+        path: "/dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/products",
+        element: (
+          <ProtectedRoute>
+            <Products />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/customers",
+        element: (
+          <ProtectedRoute>
+            <Customers />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/orders",
+        element: (
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/courses",
+        element: (
+          <ProtectedRoute>
+            <Courses />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
