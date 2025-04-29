@@ -43,10 +43,15 @@ export const getAllOrders = async (req, res) => {
 // Get orders of logged-in user
 export const getMyOrders = async (req, res) => {
   try {
-    const userId = req.user._id;
-    const orders = await Order.find({ userId }).populate("products.productId");
+    const userId = req.user._id.toString();
+
+    const orders = await Order.find({ user: userId })
+      .populate("items.product") // ✅ Matches the schema correctly
+      .sort({ createdAt: -1 });
+
     res.status(200).json(orders);
   } catch (error) {
+    console.error("Error fetching orders:", error);
     res.status(500).json({ message: "Failed to fetch your orders", error });
   }
 };
