@@ -13,7 +13,14 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { data: user } = useGetUserProfileQuery();
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetUserProfileQuery();
+
   const [updateUser] = useUpdateUserProfileMutation();
   const [deleteUser] = useDeleteUserMutation();
 
@@ -44,28 +51,47 @@ const Profile = () => {
     try {
       await updateUser({ id: user._id, data: formData }).unwrap();
       toast.success("Profile updated successfully!");
+      refetch();
     } catch (err) {
       console.error("Update failed:", err);
-      toast.error("Update failed. Try again.");
+      toast.error("Update failed. Please try again.");
     }
   };
 
-  const handleDelete = async (e) => {
-    e.preventDefault();
-
+  const handleDelete = async () => {
     try {
       await deleteUser(user?._id).unwrap();
       localStorage.removeItem("user");
       dispatch(setUser(null));
-      toast.success("User Deleted Successfully");
+      toast.success("Account deleted successfully");
       navigate("/");
-    } catch (error) {
-      toast.error(error);
+    } catch (err) {
+      toast.error("Failed to delete account");
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-dark">
+        <div className="text-white text-lg animate-pulse">
+          Loading profile...
+        </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-dark text-red-500">
+        <div>
+          <p>Failed to load profile. Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-dark text-black p-4 md:p-10">
+    <div className="min-h-screen bg-dark text-black p-4 md:p-10 transition-all">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Sidebar */}
         <div className="bg-medium rounded-2xl p-6 shadow-lg text-center md:col-span-1">
@@ -112,9 +138,11 @@ const Profile = () => {
                 type="email"
                 value={user?.email}
                 disabled
-                className="w-full p-2 rounded bg-dark border border-light text-black"
+                className="w-full p-2 rounded bg-dark border border-light text-black cursor-not-allowed"
               />
-              <p className="text-neutral-400">You can't change your email</p>
+              <p className="text-neutral-400 text-xs mt-1">
+                You can't change your email
+              </p>
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-1">Phone</label>

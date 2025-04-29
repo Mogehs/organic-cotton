@@ -34,9 +34,8 @@ const CartPage = () => {
         productId: id,
         quantity: qty,
       }).unwrap();
-
       if (
-        response?.status === 200 ||
+        response?.products?.length >= 0 ||
         response?.message === "Product added to cart"
       ) {
         toast.success("Product added to cart successfully");
