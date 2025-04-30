@@ -17,7 +17,7 @@ export default function PopularStore() {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 max-w-7xl mx-auto">
-        {products.slice(3, 13)?.map((product) => (
+        {products?.slice(3, 13)?.map((product) => (
           <div
             key={product.id}
             className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 transform hover:-translate-y-2 cursor-pointer"
