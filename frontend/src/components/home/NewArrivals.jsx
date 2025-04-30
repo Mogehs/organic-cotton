@@ -88,7 +88,7 @@ export default function NewArrivals() {
         NEW ARRIVALS
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {products?.slice(0, 5).map((product, index) => (
+        {products?.slice(5, 10).map((product, index) => (
           <motion.div
             key={product.id}
             custom={index}
