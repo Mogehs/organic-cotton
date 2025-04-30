@@ -66,7 +66,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-[100] sticky top-0">
+    <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-[100] sticky -top-0.5">
       {menufirst && (
         <div className="absolute md:hidden top-0 left-0 bg-[#f5f1e6] w-full sm:w-[70vw] h-screen z-40">
           <button

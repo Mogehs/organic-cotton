@@ -129,3 +129,19 @@ export const markOrderAsPaid = async (req, res) => {
     res.status(500).json({ message: "Failed to mark order as paid", error });
   }
 };
+
+export const deleteOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+
+    const deletedOrder = await Order.findByIdAndDelete(orderId);
+    if (!deletedOrder) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    res.status(200).json({ message: "Order deleted successfully" });
+  } catch (error) {
+    console.error("Delete Order Error:", error);
+    res.status(500).json({ message: "Server error while deleting order" });
+  }
+};

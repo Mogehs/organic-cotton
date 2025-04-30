@@ -4,28 +4,36 @@ import DeleteOrderConfirmation from "./DeleteOrderConfirmation";
 import {
   useGetAllOrdersQuery,
   useUpdateOrderStatusMutation,
+  useDeleteOrderMutation,
 } from "../features/ordersApi";
 
 const statusOptions = ["Preparing Package", "Ready To Ship", "Delivered"];
 const statusColors = {
-  PreparingPackage: "bg-yellow-100 text-yellow-800",
-  ReadyToShip: "bg-red-100 text-red-800",
+  "Preparing Package": "bg-yellow-100 text-yellow-800",
+  "Ready To Ship": "bg-red-100 text-red-800",
   Delivered: "bg-green-100 text-green-800",
 };
 
 const Orders = () => {
   const { data: orders = [], isLoading, isError } = useGetAllOrdersQuery();
   const [updateStatus] = useUpdateOrderStatusMutation();
+  const [deleteOrder, { isLoading: isDeletingOrder }] =
+    useDeleteOrderMutation();
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [updatingStatusIds, setUpdatingStatusIds] = useState([]);
 
   const handleStatusChange = async (id, newStatus) => {
+    setUpdatingStatusIds((prev) => [...prev, id]);
     try {
       await updateStatus({ id, status: newStatus }).unwrap();
     } catch (err) {
       console.error("Failed to update status:", err);
       alert("Failed to update order status. Please try again.");
+    } finally {
+      setUpdatingStatusIds((prev) => prev.filter((orderId) => orderId !== id));
     }
   };
 
@@ -35,7 +43,7 @@ const Orders = () => {
   };
 
   const filteredOrders = [...orders]
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort newest first
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .filter(
       (order) =>
         order.user?.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -92,55 +100,66 @@ const Orders = () => {
           </thead>
           <tbody>
             {filteredOrders.length > 0 ? (
-              filteredOrders.map((order, index) => (
-                <tr
-                  key={order._id}
-                  className={`transition duration-200 ${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100`}
-                >
-                  <td className="px-3 py-3">{order._id}</td>
-                  <td className="px-3 py-3">{order.user.email}</td>
-                  <td className="px-3 py-3">
-                    {new Date(order.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-3 py-3">${order.totalPrice.toFixed(2)}</td>
-                  <td className="px-3 py-3">
-                    <select
-                      value={order.status}
-                      onChange={(e) =>
-                        handleStatusChange(order._id, e.target.value)
-                      }
-                      className={`px-2 py-1 border rounded-md focus:outline-none ${
-                        statusColors[order.status]
-                      }`}
-                    >
-                      {statusOptions.map((status) => (
-                        <option key={status} value={status}>
-                          {status}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td className="px-3 py-3 font-semibold">
-                    <span
-                      className={
-                        order.isPaid ? "text-green-600" : "text-red-500"
-                      }
-                    >
-                      {order.isPaid ? <p>Paid</p> : <p>Not Paid</p>}
-                    </span>
-                  </td>
-                  <td className="px-3 py-3 text-center">
-                    <button
-                      onClick={() => handleDeleteConfirmation(order)}
-                      className="text-sm px-3 py-1 rounded-full text-white bg-red-500 hover:bg-red-600"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
+              filteredOrders.map((order, index) => {
+                const isUpdating = updatingStatusIds.includes(order._id);
+                return (
+                  <tr
+                    key={order._id}
+                    className={`transition duration-200 ${
+                      index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    } hover:bg-gray-100`}
+                  >
+                    <td className="px-3 py-3">{order._id}</td>
+                    <td className="px-3 py-3">{order.user?.email || "N/A"}</td>
+                    <td className="px-3 py-3">
+                      {new Date(order.createdAt).toLocaleDateString()}
+                    </td>
+                    <td className="px-3 py-3">
+                      ${order.totalPrice.toFixed(2)}
+                    </td>
+                    <td className="px-3 py-3">
+                      <select
+                        value={order.status}
+                        onChange={(e) =>
+                          handleStatusChange(order._id, e.target.value)
+                        }
+                        className={`px-2 py-1 border rounded-md focus:outline-none ${
+                          statusColors[order.status] || ""
+                        }`}
+                        disabled={isUpdating}
+                      >
+                        {statusOptions.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                    <td className="px-3 py-3 font-semibold">
+                      <span
+                        className={
+                          order.isPaid ? "text-green-600" : "text-red-500"
+                        }
+                      >
+                        {order.isPaid ? "Paid" : "Not Paid"}
+                      </span>
+                    </td>
+                    <td className="px-3 py-3 text-center">
+                      <button
+                        disabled={isDeletingOrder}
+                        onClick={() => handleDeleteConfirmation(order)}
+                        className={`text-sm px-3 py-1 rounded-full text-white ${
+                          isDeletingOrder
+                            ? "bg-gray-400 cursor-not-allowed"
+                            : "bg-red-500 hover:bg-red-600"
+                        }`}
+                      >
+                        {isDeletingOrder ? "Deleting..." : "Delete"}
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td
@@ -159,8 +178,14 @@ const Orders = () => {
         <DeleteOrderConfirmation
           order={selectedOrder}
           onClose={() => setIsDeleting(false)}
-          onDelete={(id) => {
-            setIsDeleting(false);
+          onDelete={async (id) => {
+            try {
+              await deleteOrder(id).unwrap();
+              setIsDeleting(false);
+            } catch (error) {
+              console.error("Failed to delete order:", error);
+              alert("Something went wrong. Order not deleted.");
+            }
           }}
         />
       )}
