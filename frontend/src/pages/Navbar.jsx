@@ -66,7 +66,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 z-[100] sticky -top-0.5">
+    <div className="w-full py-2 bg-[#f5f1e6] text-[#3e3a33] flex justify-between items-center px-5 md:px-4 text-nowrap z-[100] sticky -top-0.5">
       {menufirst && (
         <div className="absolute md:hidden top-0 left-0 bg-[#f5f1e6] w-full sm:w-[70vw] h-screen z-40">
           <button
@@ -234,8 +234,10 @@ const Navbar = () => {
             className="flex items-center gap-2 text-md font-bold hover:text-[#d8cbb3] transition-colors cursor-pointer"
             onClick={LookShowCart}
           >
-            My Cart <FiShoppingCart className="text-xl" />
+            <span className="md:hidden lg:inline">Add to Cart</span>
+            <FiShoppingCart className="text-xl" />
           </button>
+
 
           {ShowsCart && (
             <div className="absolute top-14 right-28 bg-white w-72 rounded-xl shadow-lg border border-gray-200 z-30 overflow-hidden">
