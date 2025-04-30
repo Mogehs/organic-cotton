@@ -1,4 +1,3 @@
-// src/store.js
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
@@ -10,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import storage from "redux-persist/lib/storage";
 
 // Reducers
 import shopReducer from "../features/shop/shopSlice";
@@ -27,7 +26,6 @@ import { userApi } from "../components/features/usersApi";
 import { productsApi } from "../components/features/productsApi";
 import { orderApi } from "../components/features/ordersApi";
 
-// Combine all reducers
 const rootReducer = combineReducers({
   shop: shopReducer,
   cart: cartReducer,

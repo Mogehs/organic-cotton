@@ -6,6 +6,7 @@ import {
   getOrderById,
   updateOrderStatus,
   markOrderAsPaid,
+  deleteOrder,
 } from "../controllers/orderController.js";
 import authMiddleware from "../middlewares/authMiddleware.js";
 
@@ -17,5 +18,6 @@ router.get("/my-orders", authMiddleware, getMyOrders);
 router.put("/mark-paid", markOrderAsPaid);
 router.get("/:id", authMiddleware, getOrderById);
 router.put("/:id/status", authMiddleware, updateOrderStatus);
+router.delete("/:id", authMiddleware, deleteOrder);
 
 export default router;
