@@ -79,7 +79,7 @@ const Navbar = () => {
             <ul className="flex flex-col gap-5 text-xl text-center">
               <li>
                 <Link
-                  to="/"
+                  to="/home"
                   onClick={MenuDivHidden}
                   className="hover:text-[#d8cbb3] transition-colors"
                 >
@@ -191,7 +191,7 @@ const Navbar = () => {
         </div>
         <ul className="hidden md:flex gap-6 text-lg ml-10 font-semibold">
           <li>
-            <Link to="/" className="hover:text-[#d8cbb3] transition-colors">
+            <Link to="/home" className="hover:text-[#d8cbb3] transition-colors">
               Home
             </Link>
           </li>
@@ -237,7 +237,6 @@ const Navbar = () => {
             <span className="md:hidden lg:inline">Add to Cart</span>
             <FiShoppingCart className="text-xl" />
           </button>
-
 
           {ShowsCart && (
             <div className="absolute top-14 right-28 bg-white w-72 rounded-xl shadow-lg border border-gray-200 z-30 overflow-hidden">
