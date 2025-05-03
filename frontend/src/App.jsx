@@ -22,6 +22,7 @@ import OTP from "./pages/OTP";
 
 import AdminLayout from "./components/Dashboard/admin/AdminLayout";
 import Products from "./components/Dashboard/Products";
+import Blogs from "./components/Dashboard/Blogs";
 import Customers from "./components/Dashboard/Customers";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Orders from "./components/Dashboard/Orders";
@@ -100,6 +101,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Products />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/dashboard/blogs",
+        element: (
+          <ProtectedRoute>
+            <Blogs />
           </ProtectedRoute>
         ),
       },

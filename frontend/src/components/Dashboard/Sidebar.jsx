@@ -9,6 +9,7 @@ import {
   MdMenu,
   MdClose,
 } from "react-icons/md";
+import { TbLogs } from "react-icons/tb";
 import { FaDiscourse } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -18,8 +19,10 @@ const Sidebar = () => {
   const links = [
     { to: "/dashboard", label: "Dashboard", icon: <MdDashboard /> },
     { to: "/dashboard/products", label: "Products", icon: <MdInventory /> },
+    { to: "/dashboard/blogs", label: "Blogs", icon: <TbLogs /> },
     { to: "/dashboard/customers", label: "Customers", icon: <MdPeople /> },
     { to: "/dashboard/orders", label: "Orders", icon: <MdBorderStyle /> },
+
     // { to: "/dashboard/courses", label: "Courses", icon: <FaDiscourse /> },
     // { to: '/settings', label: 'Settings', icon: <MdSettings /> },
   ];
@@ -52,8 +55,7 @@ const Sidebar = () => {
               to={to}
               end={to === "/dashboard"}
               className={({ isActive }) =>
-                `flex items-center gap-3 p-3 rounded hover:bg-medium-color transition ${
-                  isActive ? "bg-medium-color" : ""
+                `flex items-center gap-3 p-3 rounded hover:bg-medium-color transition ${isActive ? "bg-medium-color" : ""
                 }`
               }
             >
@@ -94,8 +96,7 @@ const Sidebar = () => {
                   end={to === "/dashboard"}
                   onClick={handleLinkClick}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 p-3 rounded hover:bg-medium-color transition ${
-                      isActive ? "bg-medium-color" : ""
+                    `flex items-center gap-3 p-3 rounded hover:bg-medium-color transition ${isActive ? "bg-medium-color" : ""
                     }`
                   }
                 >
