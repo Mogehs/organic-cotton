@@ -248,7 +248,7 @@ export const requestPasswordReset = async (req, res) => {
     user.resetTokenExpires = tokenExpire;
     await user.save();
 
-    const resetLink = `${process.env.FRONTEND_URL}/${token}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password/${token}`;
     const html = `
     <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
       <div style="max-width: 600px; margin: auto; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
