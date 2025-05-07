@@ -4,7 +4,7 @@ import EditRoleOverlay from "./EditRoleOverlay";
 import DeleteCustomerConfirmation from "./DeleteCustomerConfirmation";
 import UserSummaryCard from "./UserSummaryCard";
 import { useGetAllUsersQuery } from "../features/usersApi";
-import { ClipLoader } from "react-spinners"; // Spinner component
+import { ClipLoader } from "react-spinners";
 
 const Customers = () => {
   const {
