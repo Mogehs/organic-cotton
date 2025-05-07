@@ -8,7 +8,7 @@ const PageWithDelay = ({ children }) => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowLoader(false);
-    }, 3500);
+    }, 500);
 
     return () => clearTimeout(timeout);
   }, []);

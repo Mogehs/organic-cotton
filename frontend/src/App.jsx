@@ -29,24 +29,17 @@ import Orders from "./components/Dashboard/Orders";
 import Courses from "./components/Dashboard/Courses";
 import PageWithDelay from "./components/PageWithDelay";
 import ProtectedRoute from "./components/ProdtectedRoutes";
+import ForgotPassword from "./pages/ForgotPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 
 const MainLayout = () => (
   <div className="lg:mx-auto lg:max-w-[1536px]">
     <ScrollToTop />
-    <ToastContainer
-      position="top-center"
-      autoClose={3000}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      bodyClassName="text-sm leading-relaxed"
-      progressClassName="bg-[#4C3C2A]"
-    />
+
     <Navbar />
-    <Outlet />
+    <PageWithDelay>
+      <Outlet />
+    </PageWithDelay>
     <Footer />
   </div>
 );
@@ -57,20 +50,13 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: (
-          <PageWithDelay>
-            <Home />
-          </PageWithDelay>
-        ),
+        element: <Home />,
       },
       { path: "/home", element: <Home /> },
       { path: "/about", element: <About /> },
       { path: "/blog", element: <Blog /> },
       { path: "/blog/:id", element: <BlogDetail /> },
-      {
-        path: "/products",
-        element: <Shop />,
-      },
+      { path: "/products", element: <Shop /> },
       { path: "/cart/:id", element: <Cart /> },
       { path: "/cartlist", element: <CartList /> },
       { path: "/productorders", element: <ProductOrders /> },
@@ -79,11 +65,12 @@ const router = createBrowserRouter([
       { path: "/sign-in", element: <SignIn /> },
       { path: "/sign-up", element: <SignUp /> },
       { path: "/otp-verification/:id", element: <OTP /> },
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password/:id", element: <UpdatePassword /> },
     ],
   },
   { path: "*", element: <NotFoundPage /> },
 
-  // Admin Routes
   {
     path: "/dashboard",
     element: <AdminLayout />,
@@ -141,7 +128,23 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        bodyClassName="text-sm leading-relaxed"
+        progressClassName="bg-[#4C3C2A]"
+      />
+      <RouterProvider router={router} />
+    </>
+  );
 }
 
 export default App;

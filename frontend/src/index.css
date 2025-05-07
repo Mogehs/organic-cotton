@@ -23,5 +23,11 @@
 }
 
 .spin-slow {
-  animation: spinSlow 2.5s linear infinite; /* Change 5s to adjust speed */
+  animation: spinSlow 2.5s linear infinite;
+}
+
+@layer utilities {
+  .reverse-spin {
+    animation: spin 1s linear infinite reverse;
+  }
 }

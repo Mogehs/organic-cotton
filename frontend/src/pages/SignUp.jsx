@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { useRegisterUserMutation } from "../components/features/usersApi";
+import { useState } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useRegisterUserMutation } from "../components/features/usersApi";
 
-const SignUp = () => {
-  const [registerUser, { isLoading, error }] = useRegisterUserMutation();
+export default function RegisterPage() {
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
@@ -13,98 +13,122 @@ const SignUp = () => {
   });
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.name || !formData.email || !formData.password) {
+      toast.error("Please fill out all required fields", {
+        position: "top-center",
+      });
+      return;
+    }
+
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Please enter a valid email address", {
+        position: "top-center",
+      });
+      return;
+    }
+
     try {
-      const res = await registerUser(formData).unwrap();
-      toast.success(res.message);
-      navigate(`/otp-verification/${res.userId}`);
-    } catch (err) {
-      console.error("Registration failed:", err);
+      const response = await registerUser(formData).unwrap();
+      toast.success(response.message);
+      return navigate(`/otp-verification/${response.userId}`);
+    } catch (error) {
+      return toast.error(error?.data?.message);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-[#3b322d] rounded-2xl shadow-lg shadow-[#1f1b18]/50 p-8 text-[#f4e9dc]">
-        <h1 className="text-3xl font-bold mb-6 text-center tracking-widest text-[#d6c2aa]">
-          Create Account
-        </h1>
+    <div className="flex h-fit items-center justify-center p-7">
+      <div className="flex flex-col sm:h-fit md:flex-row w-full max-w-4xl bg-light-color shadow-lg rounded-xl overflow-hidden">
+        <div className="hidden md:flex w-[70%] bg-light-color items-center justify-start">
+          <img
+            src="/sign-in.jpg"
+            alt="Signup"
+            className="w-full h-[33rem] object-cover shadow-lg"
+          />
+        </div>
 
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <div>
-            <label className="block mb-1 text-sm text-[#d6c2aa]">
-              Username
+        <form
+          className="w-full md:w-[65%] flex flex-col p-8"
+          onSubmit={handleRegister}
+        >
+          <h2 className="text-3xl font-bold text-dark mb-10 text-center">
+            Create an Account
+          </h2>
+
+          <div className="mb-4">
+            <label className="block text-dark-color text-md font-medium">
+              Full Name
             </label>
             <input
               type="text"
               name="name"
+              className="w-full border border-medium p-3 rounded-lg text-dark focus:outline-none focus:ring-2 focus:ring-medium"
+              placeholder="Enter your full name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-[#5b4f46] text-[#f4e9dc] placeholder-[#c4b4a2] focus:outline-none focus:ring-2 focus:ring-[#d6c2aa]/40"
-              placeholder="yourusername"
               required
             />
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm text-[#d6c2aa]">Email</label>
+          <div className="mb-4">
+            <label className="block text-dark text-md font-medium">Email</label>
             <input
               type="email"
               name="email"
+              className="w-full border border-medium p-3 rounded-lg text-dark-color focus:outline-none focus:ring-2 focus:ring-medium"
+              placeholder="Enter your email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-[#5b4f46] text-[#f4e9dc] placeholder-[#c4b4a2] focus:outline-none focus:ring-2 focus:ring-[#d6c2aa]/40"
-              placeholder="you@example.com"
               required
             />
           </div>
 
-          <div>
-            <label className="block mb-1 text-sm text-[#d6c2aa]">
+          <div className="mb-2">
+            <label className="block text-dark-color text-md font-medium">
               Password
             </label>
             <input
               type="password"
               name="password"
+              className="w-full border border-medium p-3 rounded-lg text-dark-color focus:outline-none focus:ring-2 focus:ring-medium"
+              placeholder="Enter your password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 rounded-lg bg-[#5b4f46] text-[#f4e9dc] placeholder-[#c4b4a2] focus:outline-none focus:ring-2 focus:ring-[#d6c2aa]/40"
-              placeholder="••••••••"
               required
             />
           </div>
 
+          <div className="flex items-center justify-between mb-10">
+            <Link
+              to="/sign-in"
+              className="text-white font-medium cursor-pointer text-sm"
+            >
+              Already have an Account?
+            </Link>
+          </div>
+
           <button
             type="submit"
-            className="bg-[#a88f76] hover:bg-[#c9b79d] text-[#2e2b29] font-semibold py-2 rounded-lg transition duration-300 mt-4"
+            className={`w-full bg-dark-color text-white p-3 rounded-lg mt-4 font-semibold hover:bg-medium-color transition duration-300 shadow-md ${
+              isLoading ? "cursor-not-allowed opacity-70" : ""
+            }`}
             disabled={isLoading}
           >
-            {isLoading ? "Creating..." : "Sign Up"}
+            {isLoading ? "Creating Account..." : "Create Account"}
           </button>
-
-          {error && (
-            <p className="text-red-400 text-xs text-center mt-2">
-              {error?.data?.message || error?.error || "Registration failed."}
-            </p>
-          )}
-
-          <p className="text-center text-xs mt-4 text-[#cbbba3]">
-            Already have an account?{" "}
-            <span className="underline cursor-pointer hover:text-[#f4e9dc]">
-              Sign In
-            </span>
-          </p>
         </form>
       </div>
     </div>
   );
-};
-
-export default SignUp;
+}
