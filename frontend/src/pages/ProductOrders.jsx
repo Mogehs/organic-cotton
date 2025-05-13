@@ -1,4 +1,3 @@
-import React from "react";
 import { useGetMyOrdersQuery } from "../components/features/ordersApi";
 
 const statusColors = {
